@@ -4,6 +4,8 @@ const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
     const [isNavOpen, setIsNavOpen] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     const toggleNav = () => {
         setIsNavOpen(!isNavOpen);
@@ -13,7 +15,13 @@ export const AppProvider = ({ children }) => {
         <AppContext.Provider value={{
             isNavOpen,
             setIsNavOpen,
-            toggleNav
+            toggleNav,
+
+            products,
+            setProducts,
+
+            categories,
+            setCategories
         }}>
             {children}
         </AppContext.Provider>
