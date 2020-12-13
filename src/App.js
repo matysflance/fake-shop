@@ -10,12 +10,21 @@ import { fetchProducts } from './api';
 import './App.css';
 
 function App() {
-  const { products, setProducts, isLoading, setIsLoading } = useGlobalContext();
+  const { products, setProducts, setCategories, isLoading, setIsLoading } = useGlobalContext();
+
+  const extractCategories = (products) => {
+    const categories = products.map(product => {
+      return product.category;
+    });
+    const uniqueCategories = categories.filter((category, index, categoriesArr) => categoriesArr.indexOf(category) === index);
+    setCategories(uniqueCategories);
+  }
 
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
       setProducts(await fetchProducts());
+      extractCategories(products);
       setIsLoading(false);
     }
 
