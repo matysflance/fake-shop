@@ -9,6 +9,8 @@ export const AppProvider = ({ children }) => {
     const [categories, setCategories] = useState([]);
     const [basket, setBasket] = useState([]);
     const [basketCount, setBasketCount] = useState(0);
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertSettings, setAlertSettings] = useState({});
 
     const toggleNav = () => {
         setIsNavOpen(!isNavOpen);
@@ -33,7 +35,12 @@ export const AppProvider = ({ children }) => {
             setBasket,
 
             basketCount,
-            setBasketCount
+            setBasketCount,
+
+            showAlert,
+            setShowAlert,
+            alertSettings,
+            setAlertSettings
         }}>
             {children}
         </AppContext.Provider>

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
+import Alert from './components/Alert/Alert';
 
 import { useGlobalContext } from './context'
 import { fetchProducts } from './api';
@@ -10,7 +11,7 @@ import { fetchProducts } from './api';
 import './App.css';
 
 function App() {
-  const { products, setProducts, setCategories, isLoading, setIsLoading } = useGlobalContext();
+  const { products, setProducts, setCategories, isLoading, setIsLoading, showAlert, alertSettings } = useGlobalContext();
 
   const extractCategories = (products) => {
     const categories = products.map(product => {
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <div className="site-wrapper">
+      {showAlert ? <Alert {...alertSettings} /> : null}
       <Header />
       <main>
         <Home />

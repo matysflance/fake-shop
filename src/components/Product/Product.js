@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from '../../context';
 
 import './Product.css';
 
 const Product = ({ category, description, id, image, price, title }) => {
-    const { basket, setBasket, setBasketCount } = useGlobalContext();
+    const { basket, setBasket, setBasketCount, showAlert, setShowAlert, setAlertSettings } = useGlobalContext();
     let { basketCount } = useGlobalContext();
     const [quantity, setQuantity] = useState(1);
+
+    const displayAlert = (show = false, type = '', message = '') => {
+        setShowAlert(show);
+        setAlertSettings({ type, message });
+    }
 
     const handleAddToBasket = (e) => {
         e.preventDefault();
@@ -16,7 +21,17 @@ const Product = ({ category, description, id, image, price, title }) => {
         const newBasket = [...basket, newItem];
         setBasket(newBasket);
         setBasketCount(basketCount += quantity);
+        setQuantity(1);
+        displayAlert(true, 'success', 'Product added to the basket!');
     }
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setShowAlert(false);
+        }, 3000);
+
+        return () => clearTimeout(timeout);
+    }, [showAlert])
 
     console.log(basketCount);
 

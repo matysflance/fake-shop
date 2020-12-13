@@ -5,6 +5,7 @@ import './Nav.css';
 
 const Nav = () => {
     const { isNavOpen, toggleNav, categories, basketCount } = useGlobalContext();
+    console.log(categories);
 
     return (
         <nav className="header__nav nav">
