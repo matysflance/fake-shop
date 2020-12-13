@@ -4,6 +4,7 @@ const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
     const [isNavOpen, setIsNavOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
 
@@ -17,6 +18,9 @@ export const AppProvider = ({ children }) => {
             setIsNavOpen,
             toggleNav,
 
+            isLoading,
+            setIsLoading,
+            
             products,
             setProducts,
 
