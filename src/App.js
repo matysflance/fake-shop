@@ -16,6 +16,7 @@ function App() {
     const categories = products.map(product => {
       return product.category;
     });
+    console.log(categories);
     const uniqueCategories = categories.filter((category, index, categoriesArr) => categoriesArr.indexOf(category) === index);
     setCategories(uniqueCategories);
   }

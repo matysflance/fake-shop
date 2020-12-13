@@ -4,13 +4,13 @@ import { useGlobalContext } from '../../../context';
 import './Nav.css';
 
 const Nav = () => {
-    const { isNavOpen, toggleNav, categories } = useGlobalContext();
+    const { isNavOpen, toggleNav, categories, basketCount } = useGlobalContext();
 
     return (
         <nav className="header__nav nav">
             <a href="/basket" className="nav__basket-mobile">
                 Basket Icon
-                <span className="nav__basket-count">0</span>
+                <span className="nav__basket-count">{basketCount}</span>
             </a>
             <ul className={`nav__list ${isNavOpen ? 'nav__list--open' : ''}`}>
                 {categories.length && categories.map((category, index) => {
@@ -23,7 +23,7 @@ const Nav = () => {
 
                 <li className="nav__basket-desktop">
                     <a href="/home" className="nav__link">
-                        Basket (0)
+                        Basket ({basketCount})
                     </a>
                 </li>
             </ul>

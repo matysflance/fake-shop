@@ -7,6 +7,8 @@ export const AppProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [basket, setBasket] = useState([]);
+    const [basketCount, setBasketCount] = useState(0);
 
     const toggleNav = () => {
         setIsNavOpen(!isNavOpen);
@@ -20,12 +22,18 @@ export const AppProvider = ({ children }) => {
 
             isLoading,
             setIsLoading,
-            
+
             products,
             setProducts,
 
             categories,
-            setCategories
+            setCategories,
+
+            basket,
+            setBasket,
+
+            basketCount,
+            setBasketCount
         }}>
             {children}
         </AppContext.Provider>
