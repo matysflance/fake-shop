@@ -1,0 +1,11 @@
+.home {
+    background-color: #fff;
+}
+
+.home__products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 2rem;
+
+    padding: 2rem 1.5rem;
+}
