@@ -19,19 +19,25 @@ function App() {
     });
     console.log(categories);
     const uniqueCategories = categories.filter((category, index, categoriesArr) => categoriesArr.indexOf(category) === index);
-    setCategories(uniqueCategories);
+    return uniqueCategories;
   }
 
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
       setProducts(await fetchProducts());
-      extractCategories(products);
       setIsLoading(false);
     }
 
     fetchAPI();
   }, []);
+
+  //there was a bug, I think caused by async/await, where products array wasn't available for "extractCategories" function. I couldn't add "products" as dependency to above useFetch as it was causing an infinite loop
+  // Therefore, I had to run a separate useEffect
+  useEffect(() => {
+    const uniqueCategories = extractCategories(products);
+    setCategories(uniqueCategories);
+  }, [products]);
 
 
   console.log(products);
