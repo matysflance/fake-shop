@@ -47,21 +47,21 @@ function App() {
   console.log({ isLoading });
 
   return (
-    <div className="site-wrapper">
-      {showAlert ? <Alert {...alertSettings} /> : null}
-      <Header />
-      <main>
-        <Router>
+    <Router>
+      <div className="site-wrapper">
+        {showAlert ? <Alert {...alertSettings} /> : null}
+        <Header />
+        <main>
           <Route exact path='/'>
             <Home />
           </Route>
           <Route exact path='/basket'>
             <Basket />
           </Route>
-        </Router>
-      </main>
-      <Footer />
-    </div>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

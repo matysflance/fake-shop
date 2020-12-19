@@ -1,0 +1,23 @@
+.basket-item {
+    display: flex;
+}
+
+.basket-item__info {
+    display: flex;
+    align-items: center;
+}
+
+.basket-item__image {
+    width: 30px;
+    height: auto;
+}
+
+.basket-item__qty {
+    flex-grow: 0;
+    display: flex;
+    align-items: center;
+}
+
+.basket-item__qty-form {
+    display: flex;
+}
