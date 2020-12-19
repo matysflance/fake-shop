@@ -4,8 +4,14 @@ import { useGlobalContext } from '../../../context';
 import './Nav.css';
 
 const Nav = () => {
-    const { isNavOpen, toggleNav, categories, basketCount } = useGlobalContext();
+    const { isNavOpen, toggleNav, categories, basketCount, products, setProducts } = useGlobalContext();
     console.log(categories);
+
+    const handleFilterByCategory = (category) => {
+        // need to do it some other way, as when I filter products, state changes and "extractCategories()" in App.js that generates categories generates only one category, because all products in current state come from one category
+        //setProducts(products.filter(product => product.category === category));
+        console.log(category);
+    }
 
     return (
         <nav className="header__nav nav">
@@ -16,9 +22,9 @@ const Nav = () => {
             <ul className={`nav__list ${isNavOpen ? 'nav__list--open' : ''}`}>
                 {categories.length && categories.map((category, index) => {
                     return <li className="nav__item" key={index}>
-                        <a href="/home" className="nav__link">
+                        <button className="nav__link" onClick={() => handleFilterByCategory(category)}>
                             {category}
-                        </a>
+                        </button>
                     </li>
                 })}
 

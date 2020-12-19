@@ -4,9 +4,12 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Alert from './components/Alert/Alert';
+import Basket from './components/Basket/Basket';
 
 import { useGlobalContext } from './context'
 import { fetchProducts } from './api';
+
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
@@ -48,7 +51,14 @@ function App() {
       {showAlert ? <Alert {...alertSettings} /> : null}
       <Header />
       <main>
-        <Home />
+        <Router>
+          <Route exact path='/'>
+            <Home />
+          </Route>
+          <Route exact path='/basket'>
+            <Basket />
+          </Route>
+        </Router>
       </main>
       <Footer />
     </div>
