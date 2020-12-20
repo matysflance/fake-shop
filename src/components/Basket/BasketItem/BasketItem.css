@@ -4,6 +4,7 @@
 
 .basket-item__info {
     display: flex;
+    flex: 1;
     align-items: center;
 }
 
@@ -13,11 +14,14 @@
 }
 
 .basket-item__qty {
-    flex-grow: 0;
     display: flex;
     align-items: center;
 }
 
 .basket-item__qty-form {
     display: flex;
+}
+
+.basket-item__qty-field {
+    width: 3rem;
 }
