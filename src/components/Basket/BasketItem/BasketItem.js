@@ -9,14 +9,12 @@ const BasketItem = ({ item }) => {
     const [quantity, setQuantity] = useState(item.quantity);
 
     //todo: 
-    //1. when same product is added to the basket, merge quantity instead of adding another item - will work on next (not in this component though)
-
     //2. when using setBasket, use setBasketCount - this will eliminate a bit of repetetiveness - DONE
     useEffect(() => {
         let totalBasketCount = 0;
         basket.forEach(item => totalBasketCount += item.quantity);
         setBasketCount(totalBasketCount);
-    }, [basket, setBasket])
+    }, [basket])
 
     const decreaseQuantity = (id) => {
         let newQty = validateQuantity(quantity - 1);
