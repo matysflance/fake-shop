@@ -7,8 +7,7 @@ export const AppProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [basket, setBasket] = useState([]);
-    const [basketCount, setBasketCount] = useState(0);
+    const [basket, setBasket] = useState({products:[],total:0,count:0});
     const [showAlert, setShowAlert] = useState(false);
     const [alertSettings, setAlertSettings] = useState({});
 
@@ -33,10 +32,7 @@ export const AppProvider = ({ children }) => {
 
             basket,
             setBasket,
-
-            basketCount,
-            setBasketCount,
-
+            
             showAlert,
             setShowAlert,
             alertSettings,

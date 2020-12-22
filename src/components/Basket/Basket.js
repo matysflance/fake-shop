@@ -12,15 +12,15 @@ const Basket = () => {
         <>
             <h1 className="page-title">Basket</h1>
             <div className="basket">
-                {basket.length ? (
+                {basket.products.length ? (
                     <>
                         <div className="basket__info">
                             <h2>Your Items</h2>
-                            <BasketItems basket={basket} />
+                            <BasketItems items={basket.products} />
                         </div>
                         <div className="basket__summary">
                             <h2>Order Summary</h2>
-                            <p>total: £111.11</p>
+                            <p>total: £{parseInt(basket.total).toFixed(2)}</p>
                             <button>Checkout</button>
                         </div>
                     </>

@@ -4,8 +4,7 @@ import { useGlobalContext } from '../../context';
 import './Product.css';
 
 const Product = ({ category, description, id, image, price, title }) => {
-    const { basket, setBasket, setBasketCount, showAlert, setShowAlert, setAlertSettings } = useGlobalContext();
-    let { basketCount } = useGlobalContext();
+    const { basket, setBasket, showAlert, setShowAlert, setAlertSettings } = useGlobalContext();
     const [quantity, setQuantity] = useState(1);
 
     const displayAlert = (show = false, type = '', message = '') => {
@@ -17,24 +16,28 @@ const Product = ({ category, description, id, image, price, title }) => {
         e.preventDefault();
         
         //1. when same product is added to the basket, merge quantity instead of adding another item - DONE
-        const currentBasketItemKey = basket.findIndex(item => item.id === id);
+        const currentBasketItemKey = basket.products.findIndex(item => item.id === id);
         console.log({currentBasketItemKey});
         if (currentBasketItemKey !== -1) {
-            const currentQuantity = basket[currentBasketItemKey].quantity;
+            const currentQuantity = basket.products[currentBasketItemKey].quantity;
             const newQuantity = currentQuantity + quantity;
             console.log({newQuantity});
             const newBasket = [...basket];
-            newBasket[currentBasketItemKey].quantity = newQuantity;
+            newBasket.products[currentBasketItemKey].quantity = newQuantity;
             setBasket(newBasket);
         } else {
             const newItem = {
                 category, description, id, image, price, title, quantity
             }
-            const newBasket = [...basket, newItem];
+            const newBasket = {
+                ...basket, 
+                products: [...basket.products, newItem], 
+                count: basket.count+=quantity,
+                total: basket.total+=price * quantity
+            };
             setBasket(newBasket);
         }
 
-        setBasketCount(basketCount += quantity);
         setQuantity(1);
         displayAlert(true, 'success', 'Product added to the basket!');
     }
@@ -46,9 +49,6 @@ const Product = ({ category, description, id, image, price, title }) => {
 
         return () => clearTimeout(timeout);
     }, [showAlert])
-
-    console.log(basketCount);
-
 
     return (
         <article className="home__product product">

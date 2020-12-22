@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './Nav.css';
 
 const Nav = () => {
-    const { isNavOpen, toggleNav, categories, basketCount, products, setProducts } = useGlobalContext();
+    const { isNavOpen, toggleNav, categories, basket, products, setProducts } = useGlobalContext();
     console.log(categories);
 
     const handleFilterByCategory = (category) => {
@@ -18,7 +18,7 @@ const Nav = () => {
         <nav className="header__nav nav">
             <Link to="/basket" className="nav__basket-mobile">
                 Basket Icon
-                <span className="nav__basket-count">{basketCount}</span>
+                <span className="nav__basket-count">{basket.count}</span>
             </Link>
             <ul className={`nav__list ${isNavOpen ? 'nav__list--open' : ''}`}>
                 <li className="nav__item">
@@ -37,7 +37,7 @@ const Nav = () => {
 
                 <li className="nav__basket-desktop">
                     <Link to="/basket" className="nav__link">
-                        Basket ({basketCount})
+                        Basket ({basket.count})
                     </Link>
                 </li>
             </ul>

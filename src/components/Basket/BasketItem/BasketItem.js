@@ -4,17 +4,17 @@ import { useGlobalContext } from '../../../context';
 import './BasketItem.css';
 
 const BasketItem = ({ item }) => {
-    const { basket, setBasket, setBasketCount } = useGlobalContext();
+    const { basket, setBasket } = useGlobalContext();
 
     const [quantity, setQuantity] = useState(item.quantity);
 
     //todo: 
     //2. when using setBasket, use setBasketCount - this will eliminate a bit of repetetiveness - DONE
-    useEffect(() => {
-        let totalBasketCount = 0;
-        basket.forEach(item => totalBasketCount += item.quantity);
-        setBasketCount(totalBasketCount);
-    }, [basket])
+    // useEffect(() => {
+    //     let totalBasketCount = 0;
+    //     basket.products.forEach(item => totalBasketCount += item.quantity);
+    //     setBasketCount(totalBasketCount);
+    // }, [basket])
 
     const decreaseQuantity = (id) => {
         let newQty = validateQuantity(quantity - 1);
@@ -22,18 +22,23 @@ const BasketItem = ({ item }) => {
         if (newQty === 0) {
             removeItemFromBasket(id);
         } else {
-            const tempBasket = [...basket];
-            const itemToUpdateKey = basket.findIndex(item => item.id === id);
-            tempBasket[itemToUpdateKey].quantity = newQty;
+            const tempBasket = { ...basket };
+            const itemToUpdateKey = basket.products.findIndex(item => item.id === id);
+            tempBasket.products[itemToUpdateKey].quantity = newQty;
+            tempBasket.count -= 1;
+            tempBasket.total -= tempBasket.products[itemToUpdateKey].price;
             setQuantity(newQty);
             setBasket(tempBasket);
         }
     }
     const increaseQuantity = (id) => {
         let newQty = validateQuantity(quantity + 1);
-        const tempBasket = [...basket];
-        const itemToUpdateKey = basket.findIndex(item => item.id === id);
-        tempBasket[itemToUpdateKey].quantity = newQty;
+        const tempBasket = { ...basket };
+        const itemToUpdateKey = basket.products.findIndex(item => item.id === id);
+        tempBasket.products[itemToUpdateKey].quantity = newQty;
+        tempBasket.count += 1;
+        tempBasket.total += tempBasket.products[itemToUpdateKey].price;
+
         setQuantity(newQty);
         setBasket(tempBasket);
     }
@@ -46,9 +51,11 @@ const BasketItem = ({ item }) => {
     }
 
     const removeItemFromBasket = (productId) => {
-        const tempBasket = [...basket];
-        const itemToDeleteKey = basket.findIndex(item => item.id === productId);
-        tempBasket.splice(itemToDeleteKey, 1);
+        const tempBasket = { ...basket };
+        const itemToDeleteKey = basket.products.findIndex(item => item.id === productId);
+        tempBasket.count -= tempBasket.products[itemToDeleteKey].quantity;
+        tempBasket.total -= tempBasket.products[itemToDeleteKey].price * tempBasket.products[itemToDeleteKey].quantity;
+        tempBasket.products.splice(itemToDeleteKey, 1);
 
         setBasket(tempBasket);
     }
@@ -57,7 +64,7 @@ const BasketItem = ({ item }) => {
         <li className="basket__item basket-item">
             <div className="basket-item__info">
                 <img src={item.image} alt={item.title} className="basket-item__image" />
-                {item.title}
+                {item.title} (£{item.price.toFixed(2)})
             </div>
             <div className="basket-item__qty">
                 <form className="basket-item__qty-form">
