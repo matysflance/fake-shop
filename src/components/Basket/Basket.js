@@ -20,7 +20,7 @@ const Basket = () => {
                         </div>
                         <div className="basket__summary">
                             <h2>Order Summary</h2>
-                            <p>total: £{parseInt(basket.total).toFixed(2)}</p>
+                            <p>total: £{parseFloat(basket.total).toFixed(2)}</p>
                             <button>Checkout</button>
                         </div>
                     </>
