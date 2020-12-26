@@ -25,7 +25,7 @@ const Basket = () => {
                         </div>
                     </>
                 ) : (
-                        <h3 className="text-center">Your basket is empty</h3>
+                        <h3 className="page-title">Your basket is empty</h3>
                     )}
 
 

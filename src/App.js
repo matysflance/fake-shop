@@ -5,6 +5,7 @@ import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Alert from './components/Alert/Alert';
 import Basket from './components/Basket/Basket';
+import ErrorPage from './components/ErrorPage';
 
 import { useGlobalContext } from './context'
 import { fetchProducts } from './api';
@@ -54,12 +55,17 @@ function App() {
         {showAlert ? <Alert {...alertSettings} /> : null}
         <Header />
         <main>
-          <Route exact path='/'>
-            <Home isLoading={isLoading} />
-          </Route>
-          <Route exact path='/basket'>
-            <Basket />
-          </Route>
+          <Switch>
+            <Route exact path='/'>
+              <Home isLoading={isLoading} />
+            </Route>
+            <Route exact path='/basket'>
+              <Basket />
+            </Route>
+            <Route path='*'>
+              <ErrorPage />
+            </Route>
+          </Switch>
         </main>
         <Footer />
       </div>
