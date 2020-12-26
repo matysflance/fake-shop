@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useGlobalContext } from '../../../context';
 
 import './BasketItem.css';
@@ -8,39 +8,17 @@ const BasketItem = ({ item }) => {
 
     const [quantity, setQuantity] = useState(item.quantity);
 
-    //todo: 
-    //2. when using setBasket, use setBasketCount - this will eliminate a bit of repetetiveness - DONE
-    // useEffect(() => {
-    //     let totalBasketCount = 0;
-    //     basket.products.forEach(item => totalBasketCount += item.quantity);
-    //     setBasketCount(totalBasketCount);
-    // }, [basket])
-
     const decreaseQuantity = (id) => {
-        let newQty = validateQuantity(quantity - 1);
-        //3. if quantity is 0, just remove product from basket - DONE
-        if (newQty === 0) {
-            removeItemFromBasket(id);
-        } else {
-            const tempBasket = { ...basket };
-            const itemToUpdateKey = basket.products.findIndex(item => item.id === id);
-            tempBasket.products[itemToUpdateKey].quantity = newQty;
-            tempBasket.count -= 1;
-            tempBasket.total -= tempBasket.products[itemToUpdateKey].price;
-            setQuantity(newQty);
-            setBasket(tempBasket);
-        }
+        const newQty = validateQuantity(quantity - 1);
+        const newBasket = generateUpdatedBasket(id, newQty);
+        setBasket(newBasket);
+        setQuantity(newQty);
     }
     const increaseQuantity = (id) => {
-        let newQty = validateQuantity(quantity + 1);
-        const tempBasket = { ...basket };
-        const itemToUpdateKey = basket.products.findIndex(item => item.id === id);
-        tempBasket.products[itemToUpdateKey].quantity = newQty;
-        tempBasket.count += 1;
-        tempBasket.total += tempBasket.products[itemToUpdateKey].price;
-
+        const newQty = validateQuantity(quantity + 1);
+        const newBasket = generateUpdatedBasket(id, newQty);
+        setBasket(newBasket);
         setQuantity(newQty);
-        setBasket(tempBasket);
     }
 
     const validateQuantity = (quantityToBe) => {
@@ -50,14 +28,27 @@ const BasketItem = ({ item }) => {
         return quantityToBe;
     }
 
-    const removeItemFromBasket = (productId) => {
+    const generateUpdatedBasket = (productId, newQuantity) => {
         const tempBasket = { ...basket };
-        const itemToDeleteKey = basket.products.findIndex(item => item.id === productId);
-        tempBasket.count -= tempBasket.products[itemToDeleteKey].quantity;
-        tempBasket.total -= tempBasket.products[itemToDeleteKey].price * tempBasket.products[itemToDeleteKey].quantity;
-        tempBasket.products.splice(itemToDeleteKey, 1);
+        const itemToUpdateKey = tempBasket.products.findIndex(item => item.id === productId);
+        const productToUpdate = tempBasket.products[itemToUpdateKey];
+        //if new quantity is 0, it simply means that we need to remove item from basket and adjust basket totals
+        if (newQuantity === 0) {
+            tempBasket.count -= productToUpdate.quantity;
+            tempBasket.total -= parseFloat(productToUpdate.price * productToUpdate.quantity);
+            tempBasket.products.splice(itemToUpdateKey, 1);
+        } else {
+            // when quantity difference will be less than 0 - we're decreasing quantity, else if it's more than 0, we're increasing quantity
+            // also, make sure to make any changes if there actually was a quantity update (when diff is not 0)
+            const quantityDifference = newQuantity - quantity;
+            if (quantityDifference !== 0) {
+                productToUpdate.quantity = newQuantity;
+                tempBasket.count += quantityDifference;
+                tempBasket.total += parseFloat(quantityDifference * productToUpdate.price);
+            }
+        }
 
-        setBasket(tempBasket);
+        return tempBasket;
     }
 
     return (
