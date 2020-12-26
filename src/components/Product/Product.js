@@ -67,7 +67,7 @@ const Product = ({ category, description, id, image, price, title }) => {
                 <footer className="product__footer">
                     <div className="product__price">£{price.toFixed(2)}</div>
                     <form className="product__form" onSubmit={(e) => handleAddToBasket(e)}>
-                        <select id="" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
+                        <select id={`qty_${id}`} value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
