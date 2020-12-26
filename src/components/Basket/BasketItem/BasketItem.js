@@ -21,6 +21,11 @@ const BasketItem = ({ item }) => {
         setQuantity(newQty);
     }
 
+    const removeItemFromBasket = (id) => {
+        const newBasket = generateUpdatedBasket(id, 0);
+        setBasket(newBasket);
+    }
+
     const validateQuantity = (quantityToBe) => {
         if (quantityToBe < 0) {
             return 0;
@@ -63,6 +68,7 @@ const BasketItem = ({ item }) => {
                     <input type="number" className="basket-item__qty-field" name={`qty_${item.id}`} id={`qty_${item.id}`} value={quantity} />
                     <button type="button" onClick={() => increaseQuantity(item.id)}>+</button>
                 </form>
+                <button onClick={() => removeItemFromBasket(item.id)}>X</button>
             </div>
         </li>
     )
