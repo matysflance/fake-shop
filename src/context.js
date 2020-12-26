@@ -4,6 +4,7 @@ const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [basket, setBasket] = useState({ products: [], total: 0, count: 0 });
     const [showAlert, setShowAlert] = useState(false);
@@ -13,6 +14,8 @@ export const AppProvider = ({ children }) => {
         <AppContext.Provider value={{
             products,
             setProducts,
+            allProducts,
+            setAllProducts,
 
             categories,
             setCategories,

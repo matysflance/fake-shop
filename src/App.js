@@ -15,7 +15,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 function App() {
-  const { products, setProducts, setCategories, showAlert, alertSettings } = useGlobalContext();
+  const { products, setProducts, setAllProducts, setCategories, showAlert, alertSettings } = useGlobalContext();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,20 +31,16 @@ function App() {
   useEffect(() => {
     const fetchAPI = async () => {
       setIsLoading(true);
-      setProducts(await fetchProducts());
+      const products = await fetchProducts();
+      const uniqueCategories = extractCategories(products);
+      setCategories(['all', ...uniqueCategories]);
+      setProducts(products);
+      setAllProducts(products);
       setIsLoading(false);
     }
 
     fetchAPI();
   }, []);
-
-  //there was a bug, I think caused by async/await, where products array wasn't available for "extractCategories" function. I couldn't add "products" as dependency to above useFetch as it was causing an infinite loop
-  // Therefore, I had to run a separate useEffect
-  useEffect(() => {
-    const uniqueCategories = extractCategories(products);
-    setCategories(uniqueCategories);
-  }, [products]);
-
 
   console.log(products);
   console.log({ isLoading });

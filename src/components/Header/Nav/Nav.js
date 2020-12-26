@@ -5,15 +5,21 @@ import { Link } from 'react-router-dom';
 import './Nav.css';
 
 const Nav = () => {
-    const { categories, basket, products, setProducts } = useGlobalContext();
+    const { categories, basket, products, setProducts, allProducts } = useGlobalContext();
     console.log(categories);
 
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     const handleFilterByCategory = (category) => {
         // need to do it some other way, as when I filter products, state changes and "extractCategories()" in App.js that generates categories generates only one category, because all products in current state come from one category
-        //setProducts(products.filter(product => product.category === category));
         console.log(category);
+        if (category === 'all') {
+            setProducts(allProducts);
+            return;
+        }
+
+        const filteredProducts = allProducts.filter(product => product.category === category);
+        setProducts(filteredProducts);
     }
 
     return (
