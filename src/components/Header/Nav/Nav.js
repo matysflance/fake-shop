@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGlobalContext } from '../../../context';
 import { Link } from 'react-router-dom';
 
 import './Nav.css';
 
 const Nav = () => {
-    const { isNavOpen, toggleNav, categories, basket, products, setProducts } = useGlobalContext();
+    const { categories, basket, products, setProducts } = useGlobalContext();
     console.log(categories);
+
+    const [isNavOpen, setIsNavOpen] = useState(false);
 
     const handleFilterByCategory = (category) => {
         // need to do it some other way, as when I filter products, state changes and "extractCategories()" in App.js that generates categories generates only one category, because all products in current state come from one category
@@ -41,7 +43,7 @@ const Nav = () => {
                     </Link>
                 </li>
             </ul>
-            <button className="nav__menu-toggler" onClick={toggleNav}>Toggler</button>
+            <button className="nav__menu-toggler" onClick={() => setIsNavOpen(!isNavOpen)}>Toggler</button>
         </nav>
     )
 }

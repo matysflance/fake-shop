@@ -3,8 +3,8 @@ import Product from '../Product/Product';
 import Loader from '../Loader';
 import { useGlobalContext } from '../../context';
 
-const Home = () => {
-    const { products, isLoading } = useGlobalContext();
+const Home = ({isLoading}) => {
+    const { products } = useGlobalContext();
 
     return (
         <div className="home">

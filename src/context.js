@@ -3,27 +3,14 @@ import React, { useState, useContext } from 'react'
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
-    const [isNavOpen, setIsNavOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [basket, setBasket] = useState({products:[],total:0,count:0});
+    const [basket, setBasket] = useState({ products: [], total: 0, count: 0 });
     const [showAlert, setShowAlert] = useState(false);
     const [alertSettings, setAlertSettings] = useState({});
 
-    const toggleNav = () => {
-        setIsNavOpen(!isNavOpen);
-    }
-
     return (
         <AppContext.Provider value={{
-            isNavOpen,
-            setIsNavOpen,
-            toggleNav,
-
-            isLoading,
-            setIsLoading,
-
             products,
             setProducts,
 
@@ -32,7 +19,7 @@ export const AppProvider = ({ children }) => {
 
             basket,
             setBasket,
-            
+
             showAlert,
             setShowAlert,
             alertSettings,

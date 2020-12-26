@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -14,7 +14,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 function App() {
-  const { products, setProducts, setCategories, isLoading, setIsLoading, showAlert, alertSettings } = useGlobalContext();
+  const { products, setProducts, setCategories, showAlert, alertSettings } = useGlobalContext();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const extractCategories = (products) => {
     const categories = products.map(product => {
@@ -53,7 +55,7 @@ function App() {
         <Header />
         <main>
           <Route exact path='/'>
-            <Home />
+            <Home isLoading={isLoading} />
           </Route>
           <Route exact path='/basket'>
             <Basket />
