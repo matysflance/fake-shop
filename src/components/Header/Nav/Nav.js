@@ -37,9 +37,9 @@ const Nav = () => {
 
                 {categories.length && categories.map((category, index) => {
                     return <li className="nav__item" key={index}>
-                        <button className="nav__link" onClick={() => handleFilterByCategory(category)}>
+                        <Link to="/" className="nav__link" onClick={() => handleFilterByCategory(category)}>
                             {category}
-                        </button>
+                        </Link>
                     </li>
                 })}
 
