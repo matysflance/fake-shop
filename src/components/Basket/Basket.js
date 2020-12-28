@@ -6,25 +6,25 @@ import { useBasketContext } from '../../context';
 import './Basket.css';
 
 const Basket = () => {
-    const { basket } = useBasketContext();
+    const { basket, basketTotal } = useBasketContext();
     console.log({ basket });
     return (
         <>
             <h1 className="page-title">Basket</h1>
             <div className="basket">
-                {basket.products.length ? (
+                {basket.length ? (
                     <>
                         <div className="basket__info">
                             <h2>Your Items</h2>
                             <ul className="basket__items">
-                                {basket.products.map(item => {
+                                {basket.map(item => {
                                     return <BasketItem key={item.id} item={item} />
                                 })}
                             </ul>
                         </div>
                         <div className="basket__summary">
                             <h2>Order Summary</h2>
-                            <p>total: £{parseFloat(basket.total).toFixed(2)}</p>
+                            <p>total: £{parseFloat(basketTotal).toFixed(2)}</p>
                             <button>Checkout</button>
                         </div>
                     </>

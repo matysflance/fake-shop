@@ -17,28 +17,19 @@ const Product = ({ category, description, id, image, price, title }) => {
         e.preventDefault();
 
         //1. when same product is added to the basket, merge quantity instead of adding another item - DONE
-        const currentBasketItemKey = basket.products.findIndex(item => item.id === id);
+        const currentBasketItemKey = basket.findIndex(item => item.id === id);
         console.log({ currentBasketItemKey });
         if (currentBasketItemKey !== -1) {
-            const currentQuantity = basket.products[currentBasketItemKey].quantity;
+            const currentQuantity = basket[currentBasketItemKey].quantity;
             const newQuantity = currentQuantity + quantity;
-            console.log({ newQuantity });
-            const newBasket = { ...basket };
-            newBasket.products[currentBasketItemKey].quantity = newQuantity;
-            newBasket.count += quantity;
-            newBasket.total += parseFloat(price * quantity);
+            const newBasket = [...basket];
+            newBasket[currentBasketItemKey].quantity = newQuantity;
             setBasket(newBasket);
         } else {
             const newItem = {
                 category, description, id, image, price, title, quantity
             }
-            const newBasket = {
-                ...basket,
-                products: [...basket.products, newItem],
-                count: basket.count += quantity,
-                total: basket.total += parseFloat(price * quantity)
-            };
-            console.log(newBasket);
+            const newBasket = [...basket, newItem];
             setBasket(newBasket);
         }
 

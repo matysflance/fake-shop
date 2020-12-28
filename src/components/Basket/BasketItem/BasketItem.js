@@ -35,22 +35,10 @@ const BasketItem = ({ item }) => {
 
     const generateUpdatedBasket = (productId, newQuantity) => {
         const tempBasket = { ...basket };
-        const itemToUpdateKey = tempBasket.products.findIndex(item => item.id === productId);
-        const productToUpdate = tempBasket.products[itemToUpdateKey];
+        const itemToUpdateKey = tempBasket.findIndex(item => item.id === productId);
         //if new quantity is 0, it simply means that we need to remove item from basket and adjust basket totals
         if (newQuantity === 0) {
-            tempBasket.count -= productToUpdate.quantity;
-            tempBasket.total -= parseFloat(productToUpdate.price * productToUpdate.quantity);
-            tempBasket.products.splice(itemToUpdateKey, 1);
-        } else {
-            // when quantity difference will be less than 0 - we're decreasing quantity, else if it's more than 0, we're increasing quantity
-            // also, make sure to make any changes if there actually was a quantity update (when diff is not 0)
-            const quantityDifference = newQuantity - quantity;
-            if (quantityDifference !== 0) {
-                productToUpdate.quantity = newQuantity;
-                tempBasket.count += quantityDifference;
-                tempBasket.total += parseFloat(quantityDifference * productToUpdate.price);
-            }
+            tempBasket.splice(itemToUpdateKey, 1);
         }
 
         return tempBasket;

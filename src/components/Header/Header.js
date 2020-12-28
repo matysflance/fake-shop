@@ -5,7 +5,7 @@ import { useBasketContext } from '../../context';
 import './Header.css';
 
 const Header = ({ isLoadingCategories, categories }) => {
-    const { basket } = useBasketContext();
+    const { basketCount } = useBasketContext();
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     const toggleNav = () => setIsNavOpen(prevState => !prevState);
@@ -29,7 +29,7 @@ const Header = ({ isLoadingCategories, categories }) => {
             <nav className="header__nav nav">
                 <Link to="/basket" className="nav__basket-mobile">
                     Basket Icon
-                    <span className="nav__basket-count">{basket.count}</span>
+                    <span className="nav__basket-count">{basketCount}</span>
                 </Link>
                 <ul className={`nav__list ${isNavOpen ? 'nav__list--open' : ''}`}>
                     <li className="nav__item">
@@ -53,7 +53,7 @@ const Header = ({ isLoadingCategories, categories }) => {
 
                     <li className="nav__basket-desktop">
                         <Link to="/basket" className="nav__link">
-                            Basket ({basket.count})
+                            Basket ({basketCount})
                         </Link>
                     </li>
                 </ul>
