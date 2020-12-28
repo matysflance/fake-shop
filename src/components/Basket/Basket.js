@@ -2,11 +2,11 @@ import React from 'react';
 
 import BasketItem from './BasketItem/BasketItem';
 
-import { useGlobalContext } from '../../context';
+import { useBasketContext } from '../../context';
 import './Basket.css';
 
 const Basket = () => {
-    const { basket } = useGlobalContext();
+    const { basket } = useBasketContext();
     console.log({ basket });
     return (
         <>

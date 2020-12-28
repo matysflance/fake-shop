@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 
-const AppContext = React.createContext();
+const AlertContext = React.createContext();
+const BasketContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
     const [basket, setBasket] = useState({ products: [], total: 0, count: 0 });
@@ -8,20 +9,25 @@ export const AppProvider = ({ children }) => {
     const [alertSettings, setAlertSettings] = useState({});
 
     return (
-        <AppContext.Provider value={{
-            basket,
-            setBasket,
-
+        <AlertContext.Provider value={{
             showAlert,
             setShowAlert,
             alertSettings,
             setAlertSettings
         }}>
-            {children}
-        </AppContext.Provider>
+            <BasketContext.Provider value={{
+                basket,
+                setBasket,
+            }}>
+                {children}
+            </BasketContext.Provider>
+        </AlertContext.Provider>
     )
 }
 
-export const useGlobalContext = () => {
-    return useContext(AppContext);
+export const useAlertContext = () => {
+    return useContext(AlertContext);
+} 
+export const useBasketContext = () => {
+    return useContext(BasketContext);
 } 

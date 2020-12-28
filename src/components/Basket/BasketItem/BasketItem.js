@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useGlobalContext } from '../../../context';
+import { useBasketContext } from '../../../context';
 
 import './BasketItem.css';
 
 const BasketItem = ({ item }) => {
-    const { basket, setBasket } = useGlobalContext();
+    const { basket, setBasket } = useBasketContext();
 
     const [quantity, setQuantity] = useState(item.quantity);
 

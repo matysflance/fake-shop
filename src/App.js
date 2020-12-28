@@ -7,7 +7,7 @@ import Alert from './components/Alert/Alert';
 import Basket from './components/Basket/Basket';
 import ErrorPage from './components/ErrorPage';
 
-import { useGlobalContext } from './context'
+import { useAlertContext } from './context'
 import { fetchProducts } from './api';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -18,7 +18,7 @@ const getUniqueCategories = (products) => [...new Set(getAllCategories(products)
 const getAllCategories = (products) => ['all', ...products.map(product => product.category)];
 
 const App = () => {
-  const { showAlert, alertSettings } = useGlobalContext();
+  const { showAlert, alertSettings } = useAlertContext();
 
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);

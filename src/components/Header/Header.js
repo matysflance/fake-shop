@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import { useGlobalContext } from '../../context';
+import { useBasketContext } from '../../context';
 
 import './Header.css';
 
 const Header = ({ isLoadingCategories, categories }) => {
-    const { basket } = useGlobalContext();
+    const { basket } = useBasketContext();
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     const toggleNav = () => setIsNavOpen(prevState => !prevState);

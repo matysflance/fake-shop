@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useGlobalContext } from '../../context';
+import { useAlertContext, useBasketContext } from '../../context';
 
 import './Product.css';
 
 const Product = ({ category, description, id, image, price, title }) => {
-    const { basket, setBasket, showAlert, setShowAlert, setAlertSettings } = useGlobalContext();
+    const { showAlert, setShowAlert, setAlertSettings } = useAlertContext();
+    const { basket, setBasket } = useBasketContext();
     const [quantity, setQuantity] = useState(1);
 
     const displayAlert = (show = false, type = '', message = '') => {
