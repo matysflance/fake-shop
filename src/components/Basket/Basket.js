@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BasketItems from './BasketItems/BasketItems';
+import BasketItem from './BasketItem/BasketItem';
 
 import { useGlobalContext } from '../../context';
 import './Basket.css';
@@ -16,7 +16,11 @@ const Basket = () => {
                     <>
                         <div className="basket__info">
                             <h2>Your Items</h2>
-                            <BasketItems items={basket.products} />
+                            <ul className="basket__items">
+                                {basket.products.map(item => {
+                                    return <BasketItem key={item.id} item={item} />
+                                })}
+                            </ul>
                         </div>
                         <div className="basket__summary">
                             <h2>Order Summary</h2>
