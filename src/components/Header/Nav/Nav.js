@@ -10,6 +10,10 @@ const Nav = () => {
 
     const [isNavOpen, setIsNavOpen] = useState(false);
 
+    const toggleNav = () => {
+        setIsNavOpen(prevState => !prevState);
+    }
+
     const handleFilterByCategory = (category) => {
         // need to do it some other way, as when I filter products, state changes and "extractCategories()" in App.js that generates categories generates only one category, because all products in current state come from one category
         console.log(category);
@@ -49,7 +53,7 @@ const Nav = () => {
                     </Link>
                 </li>
             </ul>
-            <button className="nav__menu-toggler" onClick={() => setIsNavOpen(!isNavOpen)}>Toggler</button>
+            <button className="nav__menu-toggler" onClick={toggleNav}>Toggler</button>
         </nav>
     )
 }

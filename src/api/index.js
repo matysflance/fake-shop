@@ -1,20 +1,19 @@
 const BASE_URL = 'https://fakestoreapi.com';
+const PRODUCTS_URL = `${BASE_URL}/products`;
+
+const getLimitedProductsURL = (limit) => `${PRODUCTS_URL}?limit=${limit}`;
 
 export const fetchProducts = async (limitResults) => {
     let productsURL = `${BASE_URL}/products`;
 
     if (limitResults) {
-        productsURL = `${productsURL}?limit=${limitResults}`;
+        productsURL = getLimitedProductsURL(limitResults);
     }
-
-    
 
     try {
         const response = await fetch(productsURL);
-        console.log(response);
         return response.json();
     } catch (error) {
-        console.error('Error in fetchProducts API call.');
         console.error(error);
     }
 }
