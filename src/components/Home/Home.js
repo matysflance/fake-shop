@@ -1,18 +1,16 @@
 import './Home.css';
 import Product from '../Product/Product';
 import Loader from '../Loader';
-import { useGlobalContext } from '../../context';
 
-const Home = ({isLoading}) => {
-    const { products } = useGlobalContext();
+const Home = ({isLoadingProducts, products}) => {
 
     return (
         <div className="home">
             <section className="home__products">
-                {isLoading ? (
+                {isLoadingProducts ? (
                     <Loader />
                 ) : (
-                        products.length && products.map((product) => {
+                        products.map((product) => {
                             return <Product key={product.id} {...product} />
                         })
                     )}

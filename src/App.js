@@ -14,46 +14,50 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
-function App() {
-  const { products, setProducts, setAllProducts, setCategories, showAlert, alertSettings } = useGlobalContext();
+const getUniqueCategories = (products) => [...new Set(getAllCategories(products))];
+const getAllCategories = (products) => ['all', ...products.map(product => product.category)];
 
-  const [isLoading, setIsLoading] = useState(true);
+const App = () => {
+  const { showAlert, alertSettings } = useGlobalContext();
 
-  const extractCategories = (products) => {
-    const categories = products.map(product => {
-      return product.category;
-    });
-    console.log(categories);
-    const uniqueCategories = categories.filter((category, index, categoriesArr) => categoriesArr.indexOf(category) === index);
-    return uniqueCategories;
-  }
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const fetchAPI = async () => {
-      setIsLoading(true);
+    const fetchProductsFromAPI = async () => {
+      setIsLoadingProducts(true);
+      setIsLoadingCategories(true);
+
       const products = await fetchProducts();
-      const uniqueCategories = extractCategories(products);
-      setCategories(['all', ...uniqueCategories]);
       setProducts(products);
-      setAllProducts(products);
-      setIsLoading(false);
+      setCategories(getUniqueCategories(products));
+
+      setIsLoadingProducts(false);
+      setIsLoadingCategories(false);
     }
 
-    fetchAPI();
+    fetchProductsFromAPI();
   }, []);
 
-  console.log(products);
-  console.log({ isLoading });
+  console.log({ products });
 
   return (
     <Router>
       <div className="site-wrapper">
         {showAlert ? <Alert {...alertSettings} /> : null}
-        <Header />
+        <Header
+          isLoadingCategories={isLoadingCategories}
+          categories={categories}
+        />
         <main>
           <Switch>
             <Route exact path='/'>
-              <Home isLoading={isLoading} />
+              <Home
+                isLoadingProducts={isLoadingProducts}
+                products={products}
+              />
             </Route>
             <Route exact path='/basket'>
               <Basket />
