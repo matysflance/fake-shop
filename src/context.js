@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react';
+import { clone } from 'ramda';
 
 const AlertContext = React.createContext();
 const BasketContext = React.createContext();
@@ -13,6 +14,26 @@ export const AppProvider = ({ children }) => {
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertSettings, setAlertSettings] = useState({});
+
+    const increaseQuantity = (productId) => {
+        const itemToUpdateKey = basket.findIndex(item => item.id === productId);
+        const copiedBasket = clone(basket);
+        copiedBasket[itemToUpdateKey].quantity++;
+        setBasket(copiedBasket);
+    }
+    const decreaseQuantity = (productId) => {
+        const itemToUpdateKey = basket.findIndex(item => item.id === productId);
+        const copiedBasket = clone(basket);
+        copiedBasket[itemToUpdateKey].quantity--;
+        setBasket(copiedBasket);
+    }
+
+    const removeItemFromBasket = (productId) => {
+        const itemToRemoveKey = basket.findIndex(item => item.id === productId);
+        const copiedBasket = clone(basket);
+        copiedBasket.splice(itemToRemoveKey, 1);
+        setBasket(copiedBasket);
+    }
 
     useEffect(() => {
         setBasketCount(calculateBasketCount(basket));
@@ -30,7 +51,10 @@ export const AppProvider = ({ children }) => {
                 basket,
                 setBasket,
                 basketCount,
-                basketTotal
+                basketTotal,
+                increaseQuantity,
+                decreaseQuantity,
+                removeItemFromBasket
             }}>
                 {children}
             </BasketContext.Provider>
