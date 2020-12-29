@@ -28,14 +28,14 @@ export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
             <div className="basket-item__info-wrapper">
                 <div className="basket-item__info">
                     <img src={image} alt={title} className="basket-item__image" />
-                    <p>{title}</p> (<span class="sr-only">Product price:</span>&pound;{formatPrice(price)})
+                    <p>{title}</p> (<span className="sr-only">Product price:</span>&pound;{formatPrice(price)})
                 </div>
                 <div className="basket-item__subtotal">
                     Subtotal: &pound;{formatPrice(calculateSubtotal(price, quantity))}
                 </div>
             </div>
             <div className="basket-item__qty">
-                <span class="sr-only">Quantity:</span>
+                <span className="sr-only">Quantity:</span>
                 <form className="basket-item__qty-form">
                     <button type="button" onClick={handleDecreaseQuantity}>-</button>
                     <input type="number" className="basket-item__qty-field" name={`qty_${id}`} id={`qty_${id}`} value={quantity} />

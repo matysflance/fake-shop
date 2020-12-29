@@ -30,9 +30,9 @@ export const Product = ({ product }) => {
                     {description}
                 </div>
                 <footer className="product__footer">
-                    <div className="product__price"><span class="sr-only">Product price:</span>&pound;{formatPrice(price)}</div>
+                    <div className="product__price"><span className="sr-only">Product price:</span>&pound;{formatPrice(price)}</div>
                     <form className="product__form" onSubmit={(e) => handleAddToBasket(e)}>
-                        <span class="sr-only">Select quantity:</span>
+                        <span className="sr-only">Select quantity:</span>
                         <select id={`qty_${id}`} value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
                             <option value="1">1</option>
                             <option value="2">2</option>
