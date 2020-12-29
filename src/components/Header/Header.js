@@ -4,7 +4,7 @@ import { useBasketContext } from '../../context';
 
 import './Header.css';
 
-const Header = ({ isLoadingCategories, categories }) => {
+export const Header = ({ isLoadingCategories, categories }) => {
     const { basketCount } = useBasketContext();
     const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -63,5 +63,3 @@ const Header = ({ isLoadingCategories, categories }) => {
         </header>
     )
 }
-
-export default Header;

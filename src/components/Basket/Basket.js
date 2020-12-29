@@ -1,13 +1,13 @@
 import React from 'react';
 
-import BasketItem from './BasketItem/BasketItem';
+import { BasketItem } from './BasketItem/BasketItem';
 
 import { useBasketContext } from '../../context';
 import { formatPrice } from '../../util';
 
 import './Basket.css';
 
-const Basket = () => {
+export const Basket = () => {
     const { basket, basketTotal } = useBasketContext();
 
     return (
@@ -39,5 +39,3 @@ const Basket = () => {
         </>
     )
 }
-
-export default Basket;

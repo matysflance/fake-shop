@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import Home from './components/Home/Home';
-import Alert from './components/Alert/Alert';
-import Basket from './components/Basket/Basket';
-import ErrorPage from './components/ErrorPage';
+import { Header } from './components/Header/Header';
+import { Footer } from './components/Footer/Footer';
+import { Home } from './components/Home/Home';
+import { Alert } from './components/Alert/Alert';
+import { Basket } from './components/Basket/Basket';
+import { ErrorPage } from './components/ErrorPage';
 
 import { useAlertContext } from './context'
 import { fetchProducts } from './api';
@@ -17,7 +17,7 @@ import './App.css';
 const getUniqueCategories = (products) => [...new Set(getAllCategories(products))];
 const getAllCategories = (products) => ['all', ...products.map(product => product.category)];
 
-const App = () => {
+export const App = () => {
   const { showAlert, alertSettings } = useAlertContext();
 
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
@@ -72,5 +72,3 @@ const App = () => {
     </Router>
   );
 }
-
-export default App;

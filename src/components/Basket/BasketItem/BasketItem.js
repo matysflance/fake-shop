@@ -6,7 +6,7 @@ import './BasketItem.css';
 
 const calculateSubtotal = (price, quantity) => price * quantity;
 
-const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
+export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
     const { increaseQuantity, decreaseQuantity, removeItemFromBasket } = useBasketContext();
 
     const handleIncreaseQuantity = () => {
@@ -46,5 +46,3 @@ const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
         </li>
     )
 }
-
-export default BasketItem;

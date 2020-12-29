@@ -1,8 +1,8 @@
 import './Home.css';
-import Product from '../Product/Product';
-import Loader from '../Loader';
+import { Product } from '../Product/Product';
+import { Loader } from '../Loader';
 
-const Home = ({isLoadingProducts, products}) => {
+export const Home = ({isLoadingProducts, products}) => {
 
     return (
         <div className="home">
@@ -19,5 +19,3 @@ const Home = ({isLoadingProducts, products}) => {
         </div>
     )
 }
-
-export default Home;

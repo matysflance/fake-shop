@@ -4,7 +4,7 @@ import { formatPrice } from '../../util';
 
 import './Product.css';
 
-const Product = ({ product }) => {
+export const Product = ({ product }) => {
     const { category, description, id, image, price, title } = product;
 
     const { displayAlert } = useAlertContext();
@@ -47,5 +47,3 @@ const Product = ({ product }) => {
         </article>
     )
 }
-
-export default Product;
