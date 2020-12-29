@@ -15,6 +15,7 @@ export const AppProvider = ({ children }) => {
     const [showAlert, setShowAlert] = useState(false);
     const [alertSettings, setAlertSettings] = useState({});
 
+    // basket logic
     const increaseQuantity = (productId) => {
         const itemToUpdateKey = basket.findIndex(item => item.id === productId);
         const copiedBasket = clone(basket);
@@ -34,18 +35,34 @@ export const AppProvider = ({ children }) => {
         copiedBasket.splice(itemToRemoveKey, 1);
         setBasket(copiedBasket);
     }
-
+    
     useEffect(() => {
         setBasketCount(calculateBasketCount(basket));
         setBasketTotal(calculateBasketTotal(basket));
     }, [basket]);
+
+    // alerts logic
+    const displayAlert = (show = false, type = '', message = '') => {
+        setShowAlert(show);
+        setAlertSettings({ type, message });
+    }
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setShowAlert(false);
+        }, 3000);
+
+        return () => clearTimeout(timeout);
+    }, [showAlert])
+
 
     return (
         <AlertContext.Provider value={{
             showAlert,
             setShowAlert,
             alertSettings,
-            setAlertSettings
+            setAlertSettings,
+            displayAlert
         }}>
             <BasketContext.Provider value={{
                 basket,
