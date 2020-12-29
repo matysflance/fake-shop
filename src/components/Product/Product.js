@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAlertContext, useBasketContext } from '../../context';
+import { formatPrice } from '../../util';
 
 import './Product.css';
 
@@ -29,7 +30,7 @@ const Product = ({ product }) => {
                     {description}
                 </div>
                 <footer className="product__footer">
-                    <div className="product__price">£{price.toFixed(2)}</div>
+                    <div className="product__price">£{formatPrice(price)}</div>
                     <form className="product__form" onSubmit={(e) => handleAddToBasket(e)}>
                         <select id={`qty_${id}`} value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
                             <option value="1">1</option>

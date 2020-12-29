@@ -41,8 +41,9 @@ const Header = ({ isLoadingCategories, categories }) => {
                     {isLoadingCategories ? (
                         <span>loading categories...</span>
                     ) : (
-                            categories.map((category, index) => {
-                                return <li className="nav__item" key={index}>
+                            categories.map((category) => {
+                                /* in this case, categories are unique, therefore can be used as key */
+                                return <li className="nav__item" key={category}>
                                     {/* <Link to="/" className="nav__link" onClick={() => handleFilterByCategory(category)}> */}
                                     <Link to="/" className="nav__link">
                                         {category}

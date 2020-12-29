@@ -3,6 +3,8 @@ import React from 'react';
 import BasketItem from './BasketItem/BasketItem';
 
 import { useBasketContext } from '../../context';
+import { formatPrice } from '../../util';
+
 import './Basket.css';
 
 const Basket = () => {
@@ -24,7 +26,7 @@ const Basket = () => {
                         </div>
                         <div className="basket__summary">
                             <h2>Order Summary</h2>
-                            <p>total: £{parseFloat(basketTotal).toFixed(2)}</p>
+                            <p>total: £{formatPrice(basketTotal)}</p>
                             <button>Checkout</button>
                         </div>
                     </>

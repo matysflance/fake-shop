@@ -1,5 +1,6 @@
 import React from 'react';
 import { useBasketContext } from '../../../context';
+import { formatPrice } from '../../../util';
 
 import './BasketItem.css';
 
@@ -24,7 +25,7 @@ const BasketItem = ({ item: {id, title, image, quantity, price} }) => {
         <li className="basket__item basket-item">
             <div className="basket-item__info">
                 <img src={image} alt={title} className="basket-item__image" />
-                {title} (£{price.toFixed(2)})
+                {title} (£{formatPrice(price)})
             </div>
             <div className="basket-item__qty">
                 <form className="basket-item__qty-form">
