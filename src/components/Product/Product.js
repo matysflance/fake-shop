@@ -3,31 +3,16 @@ import { useAlertContext, useBasketContext } from '../../context';
 
 import './Product.css';
 
-const Product = ({ category, description, id, image, price, title }) => {
+const Product = ({ product }) => {
+    const { category, description, id, image, price, title } = product;
+
     const { displayAlert } = useAlertContext();
-    const { basket, setBasket } = useBasketContext();
+    const { addProductToBasket } = useBasketContext();
     const [quantity, setQuantity] = useState(1);
 
     const handleAddToBasket = (e) => {
         e.preventDefault();
-
-        //1. when same product is added to the basket, merge quantity instead of adding another item - DONE
-        const currentBasketItemKey = basket.findIndex(item => item.id === id);
-        console.log({ currentBasketItemKey });
-        if (currentBasketItemKey !== -1) {
-            const currentQuantity = basket[currentBasketItemKey].quantity;
-            const newQuantity = currentQuantity + quantity;
-            const newBasket = [...basket];
-            newBasket[currentBasketItemKey].quantity = newQuantity;
-            setBasket(newBasket);
-        } else {
-            const newItem = {
-                category, description, id, image, price, title, quantity
-            }
-            const newBasket = [...basket, newItem];
-            setBasket(newBasket);
-        }
-
+        addProductToBasket({...product, quantity});
         setQuantity(1);
         displayAlert(true, 'success', 'Product added to the basket!');
     }

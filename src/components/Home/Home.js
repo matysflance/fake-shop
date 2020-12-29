@@ -11,7 +11,7 @@ const Home = ({isLoadingProducts, products}) => {
                     <Loader />
                 ) : (
                         products.map((product) => {
-                            return <Product key={product.id} {...product} />
+                            return <Product key={product.id} product={product} />
                         })
                     )}
 

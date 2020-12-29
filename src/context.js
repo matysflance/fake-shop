@@ -16,12 +16,26 @@ export const AppProvider = ({ children }) => {
     const [alertSettings, setAlertSettings] = useState({});
 
     // basket logic
+    const addProductToBasket = (product) => {
+        const { id, quantity } = product;
+        const currentBasketItemKey = basket.findIndex(item => item.id === id);
+        const copiedBasket = clone(basket);
+        //1. when same product is added to the basket, merge quantity instead of adding another item - DONE
+        if (currentBasketItemKey !== -1) {
+            copiedBasket[currentBasketItemKey].quantity += quantity;
+        } else {
+            copiedBasket.push(product); 
+        }
+        setBasket(copiedBasket);
+    }
+
     const increaseQuantity = (productId) => {
         const itemToUpdateKey = basket.findIndex(item => item.id === productId);
         const copiedBasket = clone(basket);
         copiedBasket[itemToUpdateKey].quantity++;
         setBasket(copiedBasket);
     }
+
     const decreaseQuantity = (productId) => {
         const itemToUpdateKey = basket.findIndex(item => item.id === productId);
         const copiedBasket = clone(basket);
@@ -69,6 +83,7 @@ export const AppProvider = ({ children }) => {
                 setBasket,
                 basketCount,
                 basketTotal,
+                addProductToBasket,
                 increaseQuantity,
                 decreaseQuantity,
                 removeItemFromBasket
