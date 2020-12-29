@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.basket-item__info-wrapper {
+    flex-direction: column;
+    margin-right: auto;
+}
+
 .basket-item__info {
     display: flex;
     flex: 1;
