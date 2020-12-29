@@ -12,6 +12,7 @@
     align-items: center;
 
     flex-basis: 10rem;
+    padding: 1rem 0;
 }
 
 .product__image {

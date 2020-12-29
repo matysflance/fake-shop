@@ -6,7 +6,7 @@ const Home = ({isLoadingProducts, products}) => {
 
     return (
         <div className="home">
-            <section className="home__products">
+            <div className="home__products">
                 {isLoadingProducts ? (
                     <Loader />
                 ) : (
@@ -15,7 +15,7 @@ const Home = ({isLoadingProducts, products}) => {
                         })
                     )}
 
-            </section>
+            </div>
         </div>
     )
 }
