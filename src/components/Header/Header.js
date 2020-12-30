@@ -29,7 +29,7 @@ export const Header = ({ isLoadingCategories, categories }) => {
             <nav className="header__nav nav">
                 <Link to="/basket" className="nav__basket-mobile">
                     Basket Icon
-                    <span className="nav__basket-count">{basketCount}</span>
+                    <span className="nav__basket-count">{basketCount}<span className="sr-only">{basketCount > 1 ? 'items' : 'item'} in the basket</span></span>
                 </Link>
                 <ul className={`nav__list ${isNavOpen ? 'nav__list--open' : ''}`}>
                     <li className="nav__item">
@@ -55,7 +55,7 @@ export const Header = ({ isLoadingCategories, categories }) => {
 
                     <li className="nav__basket-desktop">
                         <Link to="/basket" className="nav__link">
-                            Basket ({basketCount})
+                            Basket ({basketCount}<span className="sr-only">{basketCount > 1 ? 'items' : 'item'} in the basket</span>)
                         </Link>
                     </li>
                 </ul>
