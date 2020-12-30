@@ -1,4 +1,4 @@
-const BASE_URL = 'https://fakestoreapi.ccom';
+const BASE_URL = 'https://fakestoreapi.com';
 const PRODUCTS_URL = `${BASE_URL}/products`;
 
 const getLimitedProductsURL = (limit) => `${PRODUCTS_URL}?limit=${limit}`;
