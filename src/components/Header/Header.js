@@ -10,18 +10,6 @@ export const Header = ({ isLoadingCategories, categories }) => {
 
     const toggleNav = () => setIsNavOpen(prevState => !prevState);
 
-    // const handleFilterByCategory = (category) => {
-    //     // need to do it some other way, as when I filter products, state changes and "extractCategories()" in App.js that generates categories generates only one category, because all products in current state come from one category
-    //     console.log(category);
-    //     if (category === 'all') {
-    //         setProducts(allProducts);
-    //         return;
-    //     }
-
-    //     const filteredProducts = allProducts.filter(product => product.category === category);
-    //     setProducts(filteredProducts);
-    // }
-
     return (
         <header className="header">
             <h1 className="header__site-name">Fake Shop</h1>
