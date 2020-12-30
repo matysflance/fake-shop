@@ -11,7 +11,7 @@ import { useAlertContext } from '../../context'
 import { fetchProducts } from '../../api';
 import slugify from 'slugify';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
 
@@ -88,6 +88,9 @@ export const App = () => {
                 />
               }
             />
+            <Route exact path="/category">
+                <Redirect to="/category/all" />
+            </Route>
             <Route exact path='/basket'>
               <Basket />
             </Route>
