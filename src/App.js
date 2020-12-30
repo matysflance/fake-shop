@@ -9,13 +9,33 @@ import { ErrorPage } from './components/ErrorPage';
 
 import { useAlertContext } from './context'
 import { fetchProducts } from './api';
+import slugify from 'slugify';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
-const getUniqueCategories = (products) => [...new Set(getAllCategories(products))];
-const getAllCategories = (products) => ['all', ...products.map(product => product.category)];
+const getUniqueCategories = (products) => {
+  const allCategories = getAllCategories(products);
+  return allCategories.filter(({name}, index) => allCategories.findIndex(el => el.name === name) === index);
+}
+
+// looks a bit ugly, but when I tried making it a 1-liner it was hard to understand what it's doing
+// basically, it generates all categories in form of array of objects containing name and slug of category (used for pretty URLs)
+const getAllCategories = (products) => {
+  return [
+    {
+      name: 'all',
+      slug: 'all'
+    },
+    ...products.map(product => {
+      return {
+        name: product.category,
+        slug: slugify(product.category)
+      }
+    })
+  ]
+};
 
 export const App = () => {
   const { showAlert, alertSettings } = useAlertContext();
@@ -59,6 +79,15 @@ export const App = () => {
                 products={products}
               />
             </Route>
+            <Route 
+              path='/category/:slug'
+              children={
+                <Home
+                  isLoadingProducts={isLoadingProducts}
+                  products={products}
+                />
+              }
+            />
             <Route exact path='/basket'>
               <Basket />
             </Route>

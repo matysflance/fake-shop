@@ -42,11 +42,12 @@ export const Header = ({ isLoadingCategories, categories }) => {
                         <span>loading categories...</span>
                     ) : (
                             categories.map((category) => {
+                                const { name, slug } = category;
                                 /* in this case, categories are unique, therefore can be used as key */
-                                return <li className="nav__item" key={category}>
+                                return <li className="nav__item" key={slug}>
                                     {/* <Link to="/" className="nav__link" onClick={() => handleFilterByCategory(category)}> */}
-                                    <Link to="/" className="nav__link">
-                                        {category}
+                                    <Link to={`/category/${slug}`} className="nav__link">
+                                        {name}
                                     </Link>
                                 </li>
                             })
