@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import { Header } from './components/Header/Header';
-import { Footer } from './components/Footer/Footer';
-import { Home } from './components/Home/Home';
-import { Alert } from './components/Alert/Alert';
-import { Basket } from './components/Basket/Basket';
-import { ErrorPage } from './components/ErrorPage';
+import { Header } from '../Header/Header';
+import { Footer } from '../Footer/Footer';
+import { Category } from '../Category/Category';
+import { Alert } from '../Alert/Alert';
+import { Basket } from '../Basket/Basket';
+import { ErrorPage } from '../ErrorPage';
 
-import { useAlertContext } from './context'
-import { fetchProducts } from './api';
+import { useAlertContext } from '../../context'
+import { fetchProducts } from '../../api';
 import slugify from 'slugify';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -74,7 +74,7 @@ export const App = () => {
         <main>
           <Switch>
             <Route exact path='/'>
-              <Home
+              <Category
                 isLoadingProducts={isLoadingProducts}
                 products={products}
               />
@@ -82,7 +82,7 @@ export const App = () => {
             <Route 
               path='/category/:slug'
               children={
-                <Home
+                <Category
                   isLoadingProducts={isLoadingProducts}
                   products={products}
                 />

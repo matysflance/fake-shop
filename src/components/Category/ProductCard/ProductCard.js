@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useAlertContext, useBasketContext } from '../../context';
-import { formatPrice } from '../../util';
+import { useAlertContext, useBasketContext } from '../../../context';
+import { formatPrice } from '../../../util';
 
-import './Product.css';
+import './ProductCard.css';
 
-export const Product = ({ product }) => {
+export const ProductCard = ({ product }) => {
     const { category, description, id, image, price, title } = product;
 
     const { displayAlert } = useAlertContext();
