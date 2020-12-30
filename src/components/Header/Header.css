@@ -99,3 +99,8 @@
 .nav__link:hover {
     background-color: darkgreen;
 }
+
+.nav__link.active {
+    background-color: deepskyblue;
+    color: #fff;
+}

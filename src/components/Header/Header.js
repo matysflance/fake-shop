@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useBasketContext } from '../../context';
 
 import './Header.css';
@@ -27,15 +27,15 @@ export const Header = ({ isLoadingCategories, categories }) => {
             <h1 className="header__site-name">Fake Shop</h1>
 
             <nav className="header__nav nav">
-                <Link to="/basket" className="nav__basket-mobile">
+                <NavLink to="/basket" className="nav__basket-mobile">
                     Basket Icon
                     <span className="nav__basket-count">{basketCount}<span className="sr-only">{basketCount > 1 ? 'items' : 'item'} in the basket</span></span>
-                </Link>
+                </NavLink>
                 <ul className={`nav__list ${isNavOpen ? 'nav__list--open' : ''}`}>
                     <li className="nav__item">
-                        <Link to="/" className="nav__link">
+                        <NavLink to="/" className="nav__link" exact>
                             Home
-                        </Link>
+                        </NavLink>
                     </li>
 
                     {isLoadingCategories ? (
@@ -45,18 +45,18 @@ export const Header = ({ isLoadingCategories, categories }) => {
                                 const { name, slug } = category;
                                 /* in this case, categories are unique, therefore can be used as key */
                                 return <li className="nav__item" key={slug}>
-                                    {/* <Link to="/" className="nav__link" onClick={() => handleFilterByCategory(category)}> */}
-                                    <Link to={`/category/${slug}`} className="nav__link">
+                                    {/* <NavLink to="/" className="nav__link" onClick={() => handleFilterByCategory(category)}> */}
+                                    <NavLink to={`/category/${slug}`} className="nav__link">
                                         {name}
-                                    </Link>
+                                    </NavLink>
                                 </li>
                             })
                         )}
 
                     <li className="nav__basket-desktop">
-                        <Link to="/basket" className="nav__link">
+                        <NavLink to="/basket" className="nav__link">
                             Basket ({basketCount}<span className="sr-only">{basketCount > 1 ? 'items' : 'item'} in the basket</span>)
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
                 <button className="nav__menu-toggler" onClick={toggleNav}>Toggler</button>
