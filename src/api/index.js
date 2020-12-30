@@ -1,4 +1,4 @@
-const BASE_URL = 'https://fakestoreapi.com';
+const BASE_URL = 'https://fakestoreapi.ccom';
 const PRODUCTS_URL = `${BASE_URL}/products`;
 
 const getLimitedProductsURL = (limit) => `${PRODUCTS_URL}?limit=${limit}`;
@@ -14,6 +14,6 @@ export const fetchProducts = async (limitResults) => {
         const response = await fetch(productsURL);
         return response.json();
     } catch (error) {
-        console.error(error);
+        return error;
     }
 }

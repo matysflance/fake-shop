@@ -39,7 +39,7 @@ const getAllCategories = (products) => {
 };
 
 export const App = () => {
-  const { showAlert, alertSettings } = useAlertContext();
+  const { showAlert, alertSettings, displayAlert } = useAlertContext();
 
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
@@ -51,9 +51,13 @@ export const App = () => {
       setIsLoadingProducts(true);
       setIsLoadingCategories(true);
 
-      const products = await fetchProducts();
-      setProducts(products);
-      setCategories(getUniqueCategories(products));
+      try {
+        const products = await fetchProducts();
+        setProducts(products);
+        setCategories(getUniqueCategories(products));
+      } catch (error) {
+        displayAlert(true, 'danger', 'Could not load the products. Please refresh and try again.');
+      }
 
       setIsLoadingProducts(false);
       setIsLoadingCategories(false);
