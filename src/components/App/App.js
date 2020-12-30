@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
+import { Home } from '../Home/Home';
 import { Category } from '../Category/Category';
 import { Alert } from '../Alert/Alert';
 import { Basket } from '../Basket/Basket';
@@ -74,10 +75,7 @@ export const App = () => {
         <main>
           <Switch>
             <Route exact path='/'>
-              <Category
-                isLoadingProducts={isLoadingProducts}
-                products={products}
-              />
+              <Home />
             </Route>
             <Route 
               path='/category/:slug'
