@@ -3,7 +3,6 @@ import { Product } from '../Product/Product';
 import { Loader } from '../Loader';
 import { useParams } from 'react-router-dom';
 import slugify from 'slugify';
-import { useEffect } from 'react';
 
 export const Home = ({isLoadingProducts, products}) => {
     const { slug } = useParams();
@@ -16,11 +15,6 @@ export const Home = ({isLoadingProducts, products}) => {
     }
 
     const productsToShow = getProducts(slug);
-
-    // useEffect(() => {
-    //     console.log('cat slug changed');
-    //     productsToShow = getProducts(categorySlug);
-    // }, [categorySlug])
 
     return (
         <div className="home">
