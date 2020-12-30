@@ -4,7 +4,7 @@ import { Loader } from '../Loader/Loader';
 import { useParams } from 'react-router-dom';
 import slugify from 'slugify';
 
-export const Category = ({isLoadingProducts, products}) => {
+export const Category = ({ isLoadingProducts, products }) => {
     const { slug } = useParams();
 
     const getProducts = (catSlug) => {
@@ -22,10 +22,14 @@ export const Category = ({isLoadingProducts, products}) => {
                 {isLoadingProducts ? (
                     <Loader />
                 ) : (
-                    productsToShow.map((product) => {
-                        return <ProductCard key={product.id} product={product} />
-                    })
-                )}
+                        productsToShow.length ? (
+                            productsToShow.map((product) => {
+                                return <ProductCard key={product.id} product={product} />
+                            })
+                        ) : (
+                                <h2>No products to show</h2>
+                            )
+                    )}
 
             </div>
         </div>
