@@ -67,8 +67,6 @@ export const App = () => {
     fetchProductsFromAPI();
   }, []);
 
-  console.log({ products });
-
   return (
     <Router>
       <GlobalErrorBoundary>

@@ -33,7 +33,6 @@ export const Header = ({ isLoadingCategories, categories }) => {
                                 const { name, slug } = category;
                                 /* in this case, categories are unique, therefore can be used as key */
                                 return <li className="nav__item" key={slug}>
-                                    {/* <NavLink to="/" className="nav__link" onClick={() => handleFilterByCategory(category)}> */}
                                     <NavLink to={`/category/${slug}`} className="nav__link">
                                         {name}
                                     </NavLink>
