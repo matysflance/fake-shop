@@ -21,22 +21,22 @@ export const AppProvider = ({ children }) => {
 
         if (existingBasketItem) {
             const newBasket = basket.map(item => {
-                return item.id === id 
-                ? {...item, quantity: item.quantity + quantity} 
-                : item;
+                return item.id === id
+                    ? { ...item, quantity: item.quantity + quantity }
+                    : item;
             });
             setBasket(newBasket);
         } else {
-            const newBasket = [...basket, {...product}];
+            const newBasket = [...basket, { ...product }];
             setBasket(newBasket);
         }
     }
 
     const increaseQuantity = (productId) => {
         const newBasket = basket.map(item => {
-            return item.id === productId 
-            ? {...item, quantity: item.quantity++}
-            : item;
+            return item.id === productId
+                ? { ...item, quantity: item.quantity + 1 }
+                : item;
         });
 
         setBasket(newBasket);
@@ -44,18 +44,32 @@ export const AppProvider = ({ children }) => {
 
     const decreaseQuantity = (productId) => {
         const newBasket = basket.map(item => {
-            return item.id === productId 
-            ? {...item, quantity: item.quantity--}
-            : item;
+            return item.id === productId
+                ? { ...item, quantity: item.quantity - 1 }
+                : item;
         });
 
         setBasket(newBasket);
     }
 
+    const updateQuantity = (productId, newQuantity) => {
+        if (newQuantity > 0) {
+            const newBasket = basket.map(item => {
+                return item.id === productId
+                    ? { ...item, quantity: newQuantity }
+                    : item;
+            });
+            setBasket(newBasket);
+        } else {
+            const newBasket = basket.filter(item => item.id !== productId);
+            setBasket(newBasket);
+        }
+    }
+
     const removeItemFromBasket = (productId) => {
         setBasket(basket.filter(item => item.id !== productId));
     }
-    
+
     useEffect(() => {
         setBasketCount(calculateBasketCount(basket));
         setBasketTotal(calculateBasketTotal(basket));
@@ -92,6 +106,7 @@ export const AppProvider = ({ children }) => {
                 addProductToBasket,
                 increaseQuantity,
                 decreaseQuantity,
+                updateQuantity,
                 removeItemFromBasket
             }}>
                 {children}
@@ -102,7 +117,7 @@ export const AppProvider = ({ children }) => {
 
 export const useAlertContext = () => {
     return useContext(AlertContext);
-} 
+}
 export const useBasketContext = () => {
     return useContext(BasketContext);
 } 

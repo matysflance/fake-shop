@@ -7,7 +7,7 @@ import './BasketItem.css';
 const calculateSubtotal = (price, quantity) => price * quantity;
 
 export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
-    const { increaseQuantity, decreaseQuantity, removeItemFromBasket } = useBasketContext();
+    const { increaseQuantity, decreaseQuantity, updateQuantity, removeItemFromBasket } = useBasketContext();
 
     const handleIncreaseQuantity = () => {
         increaseQuantity(id);
@@ -19,6 +19,11 @@ export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
             decreaseQuantity(id);
         }
     }
+
+    const handleChangeQuantity = (e) => {
+        updateQuantity(id, parseInt(e.target.value));
+    }
+
     const handleRemoveItem = () => {
         removeItemFromBasket(id);
     }
@@ -36,9 +41,9 @@ export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
             </div>
             <div className="basket-item__qty">
                 <span className="sr-only">Quantity:</span>
-                <form className="basket-item__qty-form">
+                <form className="basket-item__qty-form" onSubmit={(e) => e.preventDefault()}>
                     <button type="button" onClick={handleDecreaseQuantity}>-</button>
-                    <input type="number" className="basket-item__qty-field" name={`qty_${id}`} id={`qty_${id}`} value={quantity} />
+                    <input type="number" className="basket-item__qty-field" name={`qty_${id}`} id={`qty_${id}`} value={quantity} onChange={(e) => handleChangeQuantity(e)}/>
                     <button type="button" onClick={handleIncreaseQuantity}>+</button>
                 </form>
                 <button onClick={handleRemoveItem}>X</button>
