@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { clone } from 'ramda';
 
 const AlertContext = React.createContext();
 const BasketContext = React.createContext();
@@ -18,36 +17,43 @@ export const AppProvider = ({ children }) => {
     // basket logic
     const addProductToBasket = (product) => {
         const { id, quantity } = product;
-        const currentBasketItemKey = basket.findIndex(item => item.id === id);
-        const copiedBasket = clone(basket);
-        //1. when same product is added to the basket, merge quantity instead of adding another item - DONE
-        if (currentBasketItemKey !== -1) {
-            copiedBasket[currentBasketItemKey].quantity += quantity;
+        const existingBasketItem = basket.some(item => item.id === id);
+
+        if (existingBasketItem) {
+            const newBasket = basket.map(item => {
+                return item.id === id 
+                ? {...item, quantity: item.quantity + quantity} 
+                : item;
+            });
+            setBasket(newBasket);
         } else {
-            copiedBasket.push(product); 
+            const newBasket = [...basket, {...product}];
+            setBasket(newBasket);
         }
-        setBasket(copiedBasket);
     }
 
     const increaseQuantity = (productId) => {
-        const itemToUpdateKey = basket.findIndex(item => item.id === productId);
-        const copiedBasket = clone(basket);
-        copiedBasket[itemToUpdateKey].quantity++;
-        setBasket(copiedBasket);
+        const newBasket = basket.map(item => {
+            return item.id === productId 
+            ? {...item, quantity: item.quantity++}
+            : item;
+        });
+
+        setBasket(newBasket);
     }
 
     const decreaseQuantity = (productId) => {
-        const itemToUpdateKey = basket.findIndex(item => item.id === productId);
-        const copiedBasket = clone(basket);
-        copiedBasket[itemToUpdateKey].quantity--;
-        setBasket(copiedBasket);
+        const newBasket = basket.map(item => {
+            return item.id === productId 
+            ? {...item, quantity: item.quantity--}
+            : item;
+        });
+
+        setBasket(newBasket);
     }
 
     const removeItemFromBasket = (productId) => {
-        const itemToRemoveKey = basket.findIndex(item => item.id === productId);
-        const copiedBasket = clone(basket);
-        copiedBasket.splice(itemToRemoveKey, 1);
-        setBasket(copiedBasket);
+        setBasket(basket.filter(item => item.id !== productId));
     }
     
     useEffect(() => {
