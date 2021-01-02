@@ -9,33 +9,11 @@ import { Basket } from '../Basket/Basket';
 
 import { useAlertContext } from '../../context/AlertContextProvider'
 import { fetchProducts } from '../../api';
-import slugify from 'slugify';
+import { getUniqueCategories } from '../../util';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
-
-const getUniqueCategories = (products) => {
-  const allCategories = getAllCategories(products);
-  return allCategories.filter(({name}, index) => allCategories.findIndex(el => el.name === name) === index);
-}
-
-// looks a bit ugly, but when I tried making it a 1-liner it was hard to understand what it's doing
-// basically, it generates all categories in form of array of objects containing name and slug of category (used for pretty URLs)
-const getAllCategories = (products) => {
-  return [
-    {
-      name: 'all',
-      slug: 'all'
-    },
-    ...products.map(product => {
-      return {
-        name: product.category,
-        slug: slugify(product.category)
-      }
-    })
-  ]
-};
 
 export const App = () => {
   const { showAlert, alertSettings, displayAlert } = useAlertContext();
