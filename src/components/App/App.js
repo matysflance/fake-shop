@@ -6,8 +6,6 @@ import { Home } from '../Home/Home';
 import { Category } from '../Category/Category';
 import { Alert } from '../Alert/Alert';
 import { Basket } from '../Basket/Basket';
-// import { ErrorPage } from '../ErrorPage/ErrorPage';
-import { GlobalErrorBoundary } from '../../ErrorBoundaries/GlobalErrorBoundary';
 
 import { useAlertContext } from '../../context/AlertContextProvider'
 import { fetchProducts } from '../../api';
@@ -69,38 +67,36 @@ export const App = () => {
 
   return (
     <Router>
-      <GlobalErrorBoundary>
-        <div className="site-wrapper">
-          {showAlert ? <Alert {...alertSettings} /> : null}
-          <Header
-            isLoadingCategories={isLoadingCategories}
-            categories={categories}
-          />
-          <main>
-            <Switch>
-              <Route exact path='/'>
-                <Home />
-              </Route>
-              <Route 
-                path='/category/:slug'
-                children={
-                  <Category
-                    isLoadingProducts={isLoadingProducts}
-                    products={products}
-                  />
-                }
-              />
-              <Route exact path="/category">
-                  <Redirect to="/category/all" />
-              </Route>
-              <Route exact path='/basket'>
-                <Basket />
-              </Route>
-            </Switch>
-          </main>
-          <Footer />
-        </div>
-      </GlobalErrorBoundary>
+      <div className="site-wrapper">
+        {showAlert ? <Alert {...alertSettings} /> : null}
+        <Header
+          isLoadingCategories={isLoadingCategories}
+          categories={categories}
+        />
+        <main>
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route 
+              path='/category/:slug'
+              children={
+                <Category
+                  isLoadingProducts={isLoadingProducts}
+                  products={products}
+                />
+              }
+            />
+            <Route exact path="/category">
+                <Redirect to="/category/all" />
+            </Route>
+            <Route exact path='/basket'>
+              <Basket />
+            </Route>
+          </Switch>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }

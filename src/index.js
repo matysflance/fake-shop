@@ -5,14 +5,18 @@ import { App } from './components/App/App';
 import { reportWebVitals } from './reportWebVitals';
 import { AlertContextProvider } from './context/AlertContextProvider';
 import { BasketContextProvider } from './context/BasketContextProvider';
+import { GlobalErrorBoundary } from './ErrorBoundaries/GlobalErrorBoundary';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <AlertContextProvider>
-      <BasketContextProvider>
-        <App />
-      </BasketContextProvider>
-    </AlertContextProvider>
+    <GlobalErrorBoundary>
+      <AlertContextProvider>
+        <BasketContextProvider>
+          <App />
+        </BasketContextProvider>
+      </AlertContextProvider>
+    </GlobalErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root')
 );
