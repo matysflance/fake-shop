@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from 'react-router-dom';
-import { useBasketContext } from '../../context';
+import { useBasketContext } from '../../context/BasketContextProvider';
 
 import './Header.css';
 

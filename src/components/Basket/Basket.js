@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BasketItem } from './BasketItem/BasketItem';
 
-import { useBasketContext } from '../../context';
+import { useBasketContext } from '../../context/BasketContextProvider';
 import { formatPrice } from '../../util';
 
 import './Basket.css';

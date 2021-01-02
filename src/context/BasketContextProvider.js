@@ -1,18 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-const AlertContext = React.createContext();
 const BasketContext = React.createContext();
 
 const calculateBasketCount = basket => basket.reduce((currentCount, item) => item.quantity + currentCount, 0);
 const calculateBasketTotal = basket => basket.reduce((currentTotal, item) => parseFloat(((item.price * item.quantity) + currentTotal).toFixed(2)), 0);
 
-export const AppProvider = ({ children }) => {
+export const BasketContextProvider = ({children}) => {
     const [basket, setBasket] = useState([]);
     const [basketCount, setBasketCount] = useState(0);
     const [basketTotal, setBasketTotal] = useState(0);
-
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertSettings, setAlertSettings] = useState({});
 
     // basket logic
     const addProductToBasket = (product) => {
@@ -75,49 +71,23 @@ export const AppProvider = ({ children }) => {
         setBasketTotal(calculateBasketTotal(basket));
     }, [basket]);
 
-    // alerts logic
-    const displayAlert = (show = false, type = '', message = '') => {
-        setShowAlert(show);
-        setAlertSettings({ type, message });
-    }
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setShowAlert(false);
-        }, 3000);
-
-        return () => clearTimeout(timeout);
-    }, [showAlert])
-
-
     return (
-        <AlertContext.Provider value={{
-            showAlert,
-            setShowAlert,
-            alertSettings,
-            setAlertSettings,
-            displayAlert
-        }}>
-            <BasketContext.Provider value={{
-                basket,
-                setBasket,
-                basketCount,
-                basketTotal,
-                addProductToBasket,
-                increaseQuantity,
-                decreaseQuantity,
-                updateQuantity,
-                removeItemFromBasket
-            }}>
-                {children}
-            </BasketContext.Provider>
-        </AlertContext.Provider>
+        <BasketContext.Provider value={{
+            basket,
+            setBasket,
+            basketCount,
+            basketTotal,
+            addProductToBasket,
+            increaseQuantity,
+            decreaseQuantity,
+            updateQuantity,
+            removeItemFromBasket
+        }} >
+            {children}
+        </BasketContext.Provider>
     )
 }
 
-export const useAlertContext = () => {
-    return useContext(AlertContext);
-}
 export const useBasketContext = () => {
     return useContext(BasketContext);
-} 
+}

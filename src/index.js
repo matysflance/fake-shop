@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { App } from './components/App/App';
 import { reportWebVitals } from './reportWebVitals';
-import { AppProvider } from './context';
+import { AlertContextProvider } from './context/AlertContextProvider';
+import { BasketContextProvider } from './context/BasketContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
+    <AlertContextProvider>
+      <BasketContextProvider>
+        <App />
+      </BasketContextProvider>
+    </AlertContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

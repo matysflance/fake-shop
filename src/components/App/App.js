@@ -9,7 +9,7 @@ import { Basket } from '../Basket/Basket';
 // import { ErrorPage } from '../ErrorPage/ErrorPage';
 import { GlobalErrorBoundary } from '../../ErrorBoundaries/GlobalErrorBoundary';
 
-import { useAlertContext } from '../../context'
+import { useAlertContext } from '../../context/AlertContextProvider'
 import { fetchProducts } from '../../api';
 import slugify from 'slugify';
 
@@ -65,7 +65,7 @@ export const App = () => {
     }
 
     fetchProductsFromAPI();
-  }, [displayAlert]);
+  }, []);
 
   return (
     <Router>

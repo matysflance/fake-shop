@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBasketContext } from '../../../context';
+import { useBasketContext } from '../../../context/BasketContextProvider';
 import { formatPrice } from '../../../util';
 
 import './BasketItem.css';

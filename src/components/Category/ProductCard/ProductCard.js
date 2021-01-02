@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useAlertContext, useBasketContext } from '../../../context';
+import { useAlertContext } from '../../../context/AlertContextProvider';
+import { useBasketContext } from '../../../context/BasketContextProvider';
 import { formatPrice } from '../../../util';
 
 import './ProductCard.css';
