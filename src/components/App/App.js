@@ -51,7 +51,7 @@ export const App = () => {
     const fetchProductsFromAPI = async () => {
       setIsLoadingProducts(true);
       setIsLoadingCategories(true);
-
+      console.log('fetchProductsFromAPI');
       try {
         const products = await fetchProducts();
         setProducts(products);
@@ -65,7 +65,7 @@ export const App = () => {
     }
 
     fetchProductsFromAPI();
-  }, []);
+  }, [displayAlert]);
 
   return (
     <Router>
