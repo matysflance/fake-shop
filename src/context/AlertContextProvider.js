@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Alert } from '../components/Alert/Alert';
 
 const AlertContext = React.createContext();
 
@@ -28,6 +29,7 @@ export const AlertContextProvider = ({ children }) => {
             setAlertSettings,
             displayAlert
         }} >
+            {showAlert ? <Alert {...alertSettings} /> : null}
             {children}
         </AlertContext.Provider>
     )

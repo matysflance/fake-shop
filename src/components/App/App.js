@@ -4,7 +4,6 @@ import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
 import { Home } from '../Home/Home';
 import { Category } from '../Category/Category';
-import { Alert } from '../Alert/Alert';
 import { Basket } from '../Basket/Basket';
 
 import { useAlertContext } from '../../context/AlertContextProvider'
@@ -16,7 +15,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import './App.css';
 
 export const App = () => {
-  const { showAlert, alertSettings, displayAlert } = useAlertContext();
+  const { displayAlert } = useAlertContext();
 
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
@@ -46,7 +45,6 @@ export const App = () => {
   return (
     <Router>
       <div className="site-wrapper">
-        {showAlert ? <Alert {...alertSettings} /> : null}
         <Header
           isLoadingCategories={isLoadingCategories}
           categories={categories}
