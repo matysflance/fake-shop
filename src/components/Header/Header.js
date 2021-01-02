@@ -17,7 +17,7 @@ export const Header = ({ isLoadingCategories, categories }) => {
             <nav className="header__nav nav">
                 <NavLink to="/basket" className="nav__basket-mobile">
                     Basket Icon
-                    <span className="nav__basket-count">{basketCount}<span className="sr-only">{basketCount > 1 ? 'items' : 'item'} in the basket</span></span>
+                    <span className="nav__basket-count">{basketCount}<span className="sr-only">{basketCount === 0 || basketCount > 1 ? 'items' : 'item'} in the basket</span></span>
                 </NavLink>
                 <ul className={`nav__list ${isNavOpen ? 'nav__list--open' : ''}`}>
                     <li className="nav__item">
