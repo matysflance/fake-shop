@@ -1,0 +1,153 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+/* nav */
+.navbar {
+  --navbar-color-light: #f7f7f7;
+  --navbar-color-dark: #000;
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 0.7rem 1rem;
+  background-color: var(--navbar-color-dark);
+  color: var(--navbar-color-light);
+}
+
+.basketLink {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.basketIcon {
+  width: 3rem;
+  height: 3rem;
+  fill: var(--navbar-color-light);
+}
+
+/* .basketInfo {
+
+} */
+
+.basketCount {
+  margin-right: 1rem;
+}
+
+.nav {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  /* display: none; */
+  height: 0;
+  overflow: hidden;
+  background-color: var(--navbar-color-dark);
+  transition: 0.3s height cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.navOpen {
+  /* display: block; */
+  height: 20rem;
+}
+
+.navItem {
+  list-style: none;
+  text-align: center;
+}
+
+.navLink {
+  position: relative;
+  display: block;
+  padding: 1rem;
+  font-size: 1.5rem;
+
+  text-decoration: none;
+  text-transform: capitalize;
+  font-family: var(--font-secondary);
+  color: var(--navbar-color-light);
+}
+
+.navLink:hover::before {
+  content: "";
+  position: absolute;
+  height: 3px;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  background-color: var(--navbar-color-light);
+}
+
+.navLinkActive {
+  background-color: var(--navbar-color-light);
+  color: var(--navbar-color-dark);
+}
+
+.navToggler {
+  width: 3.6rem;
+  height: 3.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.navTogglerBar {
+  height: 4px;
+  width: 3rem;
+  background-color: var(--navbar-color-light);
+}
+
+.navTogglerBar::before,
+.navTogglerBar::after {
+  content: "";
+  position: absolute;
+  height: 4px;
+  width: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--navbar-color-light);
+}
+
+.navTogglerBar::before {
+  top: 0.5rem;
+}
+
+.navTogglerBar::after {
+  bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    justify-content: center;
+    height: auto !important;
+  }
+
+  .nav {
+    position: static;
+    display: flex;
+    transform: none;
+    width: auto;
+  }
+
+  .navToggler {
+    display: none;
+  }
+}

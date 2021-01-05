@@ -1,0 +1,38 @@
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  padding: 1.6rem;
+}
+
+.logoIcon {
+  fill: var(--color-primary);
+  /* width: 23rem;
+  height: 23rem; */
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+.logoText {
+  font-family: var(--font-primary);
+}
+
+.logoHeading {
+  /* font-size: 8rem; */
+  font-weight: 700;
+  font-size: 3rem;
+  color: #000;
+  margin: 0;
+}
+
+.logoHeadingHighlight {
+  color: var(--color-primary);
+}
+
+.logoSubheading {
+  /* font-size: 2.5rem; */
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #a8a8a8;
+  margin: 0;
+  text-align: center;
+}
