@@ -1,0 +1,36 @@
+.alert {
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 1rem;
+  min-width: 20rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.alertDanger {
+  background-color: rgb(175, 75, 60);
+}
+
+.alertSuccess {
+  background-color: rgb(26, 170, 44);
+}
+
+@media (min-width: 576px) {
+  .alert {
+    bottom: unset;
+    top: 5rem;
+    max-width: 50rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .alert {
+    top: 10rem;
+    max-width: 80rem;
+  }
+}
