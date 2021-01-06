@@ -50,6 +50,7 @@
   top: 100%;
   left: 50%;
   width: 100%;
+  z-index: 1;
   transform: translateX(-50%);
   /* display: none; */
   height: 0;
@@ -59,8 +60,6 @@
 }
 
 .navOpen {
-  /* display: block; */
-  height: 20rem;
 }
 
 .navItem {

@@ -6,7 +6,7 @@ import styles from './Header.module.css';
 import clsx from 'clsx';
 import { formatPrice } from '../../util';
 
-const calculateNavItemsHeight = navDOMElements => [...navDOMElements].reduce((currentHeight, el) => el.getBoundingClientRect() + currentHeight, 0);
+const calculateNavItemsHeight = navDOMElements => [...navDOMElements].reduce((currentHeight, el) => el.getBoundingClientRect().height + currentHeight, 0);
 
 export const Header = ({ isLoadingCategories, categories }) => {
     const { basketCount, basketTotal } = useBasketContext();
@@ -17,9 +17,6 @@ export const Header = ({ isLoadingCategories, categories }) => {
     const navRef = useRef(null);
 
     useEffect(() => {
-        console.log('navref');
-        console.log(navRef.current);
-        console.log(isNavOpen);
         if (isNavOpen) {
             navRef.current.style = `height: ${calculateNavItemsHeight(navRef.current.children)}px;`;
         } else {
@@ -30,7 +27,6 @@ export const Header = ({ isLoadingCategories, categories }) => {
 
     return (
         <header className={styles.header}>
-            {/* <h1 className="header__site-name">Fake Shop</h1> */}
             <Logo />
             <nav className={styles.navbar}>
                 <NavLink to="/basket" className={styles.basketLink}>
