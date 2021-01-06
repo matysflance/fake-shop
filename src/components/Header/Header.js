@@ -40,7 +40,7 @@ export const Header = ({ isLoadingCategories, categories }) => {
                 </NavLink>
                 <ul className={clsx(styles.nav, isNavOpen && styles.navOpen)} ref={navRef}>
                     <li className={styles.navItem}>
-                        <NavLink to="/" className={styles.navLink} exact>
+                        <NavLink to="/" exact className={styles.navLink} activeClassName={styles.navLinkActive}>
                             Home
                         </NavLink>
                     </li>
