@@ -19,9 +19,12 @@ export const Category = ({ isLoadingProducts, products, categories }) => {
 
     return (
         <div className="container">
-            <div className={styles.titleWrapper}>
-                <h2 className={styles.title}>{getCategoryNameBySlug(slug, categories)}</h2>
-            </div>
+            {categories.length ? (
+                <div className={styles.titleWrapper}>
+                    <h2 className={styles.title}>{getCategoryNameBySlug(slug, categories)}</h2>
+                </div>
+            ) : null}
+            
             
             <div className={styles.category}>
                 <div className={styles.products}>
