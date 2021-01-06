@@ -3,6 +3,7 @@ import { useAlertContext } from '../../../context/AlertContextProvider';
 import { useBasketContext } from '../../../context/BasketContextProvider';
 import { formatPrice } from '../../../util';
 import { Button } from '../../Button/Button';
+import clsx from 'clsx';
 
 import styles from './ProductCard.module.css';
 
@@ -43,7 +44,7 @@ export const ProductCard = ({ product }) => {
                     <div className={styles.formGroup}>
                         <label htmlFor={`qty_${id}`} className={styles.formLabel}>Select quantity:</label>
                         <select 
-                            className={styles.formControl} 
+                            className={clsx(styles.formControl, styles.selectFormControl)} 
                             id={`qty_${id}`} 
                             value={quantity} 
                             onChange={(e) => setQuantity(parseInt(e.target.value))}
@@ -55,8 +56,7 @@ export const ProductCard = ({ product }) => {
                             <option value="5">5</option>
                         </select>
                     </div>
-                    <Button fullWidth>Add to Basket</Button>
-                    {/* <button className={"btn btn-primary"}>Add to Basket</button> */}
+                    <Button fullWidth type="submit">Add to Basket</Button>
                 </form>
             </footer>
         </article>
