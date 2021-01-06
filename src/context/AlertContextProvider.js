@@ -13,13 +13,13 @@ export const AlertContextProvider = ({ children }) => {
         setAlertSettings({ type, message });
     }
 
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         setShowAlert(false);
-    //     }, 3000);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setShowAlert(false);
+        }, 3000);
 
-    //     return () => clearTimeout(timeout);
-    // }, [showAlert])
+        return () => clearTimeout(timeout);
+    }, [showAlert])
 
     return (
         <AlertContext.Provider value={{
