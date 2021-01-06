@@ -60,6 +60,7 @@ export const App = () => {
                 <Category
                   isLoadingProducts={isLoadingProducts}
                   products={products}
+                  categories={categories}
                 />
               }
             />

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useAlertContext } from '../../../context/AlertContextProvider';
 import { useBasketContext } from '../../../context/BasketContextProvider';
 import { formatPrice } from '../../../util';
+import { Button } from '../../Button/Button';
 
-import './ProductCard.css';
+import styles from './ProductCard.module.css';
+
+const calculateProductTotal = (price, quantity) => price * quantity;
 
 export const ProductCard = ({ product }) => {
     const { category, description, id, image, price, title } = product;
@@ -20,31 +23,42 @@ export const ProductCard = ({ product }) => {
     }
 
     return (
-        <article className="home__product product">
-            <div className="product__image-wrapper">
-                <img src={image} alt={title} className="product__image" />
+        <article className={styles.product}>
+            <div className={styles.imageWrapper}>
+                <img src={image} alt={title} className={styles.image} />
             </div>
-            <div className="product__info">
-                <p className="product__category">{category}</p>
-                <h2 className="product__name">{title}</h2>
-                <div className="product__description">
-                    {description}
+            <div className={styles.cardBody}>
+                <p className={styles.category}>{category}</p>
+                <h3 className={styles.name}>{title}</h3>
+                <div className={styles.description}>
+                    {description.substr(0, 100)}...
                 </div>
-                <footer className="product__footer">
-                    <div className="product__price"><span className="sr-only">Product price:</span>&pound;{formatPrice(price)}</div>
-                    <form className="product__form" onSubmit={(e) => handleAddToBasket(e)}>
-                        <span className="sr-only">Select quantity:</span>
-                        <select id={`qty_${id}`} value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
+            </div>
+            <footer className={styles.cardFooter}>
+                <div className={styles.price}>
+                <span className="sr-only">Product price:</span>
+                &pound;{formatPrice(calculateProductTotal(price, quantity))}
+                </div>
+                <form onSubmit={(e) => handleAddToBasket(e)}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor={`qty_${id}`} className={styles.formLabel}>Select quantity:</label>
+                        <select 
+                            className={styles.formControl} 
+                            id={`qty_${id}`} 
+                            value={quantity} 
+                            onChange={(e) => setQuantity(parseInt(e.target.value))}
+                        >
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
-                        <button className="btn btn-primary">Add to Basket</button>
-                    </form>
-                </footer>
-            </div>
+                    </div>
+                    <Button fullWidth>Add to Basket</Button>
+                    {/* <button className={"btn btn-primary"}>Add to Basket</button> */}
+                </form>
+            </footer>
         </article>
     )
 }

@@ -1,0 +1,13 @@
+.btn {
+  text-transform: uppercase;
+  font-family: var(--font-primary);
+  background: none;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  display: block;
+  border: 2px solid #000;
+}
+
+.btnBlock {
+  width: 100%;
+}

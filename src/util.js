@@ -23,3 +23,5 @@ export const getAllCategories = (products) => {
     })
   ]
 };
+
+export const getCategoryNameBySlug = (slug, allCategories) => allCategories.find(category => category.slug === slug).name;
