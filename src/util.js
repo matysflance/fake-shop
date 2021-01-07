@@ -27,7 +27,10 @@ export const getAllCategories = (products) => {
 export const getCategoryNameBySlug = (slug, allCategories) => allCategories.find(category => category.slug === slug).name;
 
 export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
-  return function innerSort(a, b) {
+  return function (a, b) {
+    //check if desired order matches available options
+    if (order.toUpperCase() !== 'ASC' && order.toUpperCase() !== 'DESC') { return 0; }
+
     //check if desired property even exists on either object
     if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
         return 0;

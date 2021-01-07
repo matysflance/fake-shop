@@ -8,35 +8,19 @@ import { getCategoryNameBySlug, compareArrayOfObjectsByKey } from '../../util';
 import clsx from 'clsx';
 import { useState } from 'react';
 
-const sortProducts = (products, sortBy) => {
-    let compareKey, order;
-    switch (sortBy) {
-        case 'priceASC':
-            compareKey = 'price';
-            order = 'ASC';
-            break;
-        case 'priceDESC':
-            compareKey = 'price';
-            order = 'DESC';
-            break;
-        case 'nameASC':
-            compareKey = 'title';
-            order = 'ASC';
-            break;
-        case 'nameDESC':
-            compareKey = 'title';
-            order = 'DESC';
-            break;
-        default:
-            break;
-    }
+const sortProductsByKeyAndOrder = (products, sortBy) => {
+    // since I cannot use object in select value, I have to pass a string and extract key and order from it
+    const [sortByKey, sortByOrder] = sortBy.split('_');
     
-    return [...products].sort(compareArrayOfObjectsByKey(compareKey, order));
+    //if for any reason key or order are not set (e.g. wrong string passed from select value) - return same products as passed
+    return !sortByKey || !sortByOrder
+    ? products
+    : [...products].sort(compareArrayOfObjectsByKey(sortByKey, sortByOrder));
 }
 
 export const Category = ({ isLoadingProducts, products, categories }) => {
     const { slug } = useParams();
-    const [sortBy, setSortBy] = useState('nameASC');
+    const [sortBy, setSortBy] = useState('title_ASC');
 
     const getProducts = (catSlug) => {
         if (catSlug && catSlug !== 'all') {
@@ -45,7 +29,7 @@ export const Category = ({ isLoadingProducts, products, categories }) => {
         return products;
     }
 
-    const productsToShow = sortProducts(getProducts(slug, categories), sortBy);
+    const productsToShow = sortProductsByKeyAndOrder(getProducts(slug, categories), sortBy);
 
 
     return (
@@ -64,10 +48,10 @@ export const Category = ({ isLoadingProducts, products, categories }) => {
                                 onChange={(e) => setSortBy(e.target.value)}
                                 value={sortBy}
                             >
-                                <option value="priceASC">Price (Low-High)</option>
-                                <option value="priceDESC">Price (High-Low)</option>
-                                <option value="nameASC">Name (A-Z)</option>
-                                <option value="nameDESC">Name (Z-A)</option>
+                                <option value="price_ASC">Price (Low-High)</option>
+                                <option value="price_DESC">Price (High-Low)</option>
+                                <option value="title_ASC">Name (A-Z)</option>
+                                <option value="title_DESC">Name (Z-A)</option>
                             </select>
                         </div>
                     </form>
