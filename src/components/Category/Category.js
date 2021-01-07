@@ -3,20 +3,10 @@ import { Loader } from '../Loader/Loader';
 import { useParams } from 'react-router-dom';
 import slugify from 'slugify';
 import styles from './Category.module.css';
-import { getCategoryNameBySlug, compareArrayOfObjectsByKey } from '../../util';
+import { getCategoryNameBySlug, sortObjectsByKey } from '../../util';
 
 import clsx from 'clsx';
 import { useState } from 'react';
-
-const sortProductsByKeyAndOrder = (products, sortBy) => {
-    // since I cannot use object in select value, I have to pass a string and extract key and order from it
-    const [sortByKey, sortByOrder] = sortBy.split('_');
-    
-    //if for any reason key or order are not set (e.g. wrong string passed from select value) - return same products as passed
-    return !sortByKey || !sortByOrder
-    ? products
-    : [...products].sort(compareArrayOfObjectsByKey(sortByKey, sortByOrder));
-}
 
 export const Category = ({ isLoadingProducts, products, categories }) => {
     const { slug } = useParams();
@@ -29,7 +19,7 @@ export const Category = ({ isLoadingProducts, products, categories }) => {
         return products;
     }
 
-    const productsToShow = sortProductsByKeyAndOrder(getProducts(slug, categories), sortBy);
+    const productsToShow = sortObjectsByKey(getProducts(slug, categories), sortBy);
 
 
     return (

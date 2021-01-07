@@ -28,25 +28,35 @@ export const getCategoryNameBySlug = (slug, allCategories) => allCategories.find
 
 export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
   return function (a, b) {
-    //check if desired order matches available options
-    if (order.toUpperCase() !== 'ASC' && order.toUpperCase() !== 'DESC') { return 0; }
+    //order can only be ASC or DESC
+    if (order !== 'ASC' && order !== 'DESC') { 
+      throw Error(`Invalid order ${order}`);
+    }
 
-    //check if desired property even exists on either object
     if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-        return 0;
+      throw Error(`Compared object(s) do not have property '${key}'`);
     }
 
     //make it case insensitive
     const valA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
     const valB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
 
-    
-    let comparison = 0;
     if (valA > valB) {
-        comparison = 1;
+        return order === 'DESC' ? -1 : 1;
     } else if (valA < valB) {
-        comparison = -1;
+        return order === 'DESC' ? 1 : -1;
+    } else {
+        return 0;
     }
-    return order === 'DESC' ? (comparison * -1) : comparison;
   }
+}
+
+export const sortObjectsByKey = (objectsArr, sortBy) => {
+  // sortBy format needs to be: "key_order"
+  const [key, order] = sortBy.split('_');
+  
+  //check if for any reason key or order are not set (e.g. wrong format of "key_order")
+  if (!key || !order) { throw Error('Key or order not specified.'); }
+  
+  return [...objectsArr].sort(compareArrayOfObjectsByKey(key, order));
 }
