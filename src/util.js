@@ -25,3 +25,25 @@ export const getAllCategories = (products) => {
 };
 
 export const getCategoryNameBySlug = (slug, allCategories) => allCategories.find(category => category.slug === slug).name;
+
+export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
+  return function innerSort(a, b) {
+    //check if desired property even exists on either object
+    if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+        return 0;
+    }
+
+    //make it case insensitive
+    const valA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
+    const valB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
+
+    
+    let comparison = 0;
+    if (valA > valB) {
+        comparison = 1;
+    } else if (valA < valB) {
+        comparison = -1;
+    }
+    return order === 'DESC' ? (comparison * -1) : comparison;
+  }
+}
