@@ -13,10 +13,12 @@
   align-self: stretch;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: relative;
   padding: 0.7rem 1rem;
   background-color: var(--navbar-color-dark);
   color: var(--navbar-color-light);
+  height: 5.5rem;
 }
 
 .basketLink {

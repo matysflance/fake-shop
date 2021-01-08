@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { useBasketContext } from '../../context/BasketContextProvider';
 import { Logo } from './Logo/Logo';
+import { Loader } from '../Loader/Loader';
 import styles from './Header.module.css';
 import clsx from 'clsx';
 import { formatPrice } from '../../util';
@@ -39,24 +40,28 @@ export const Header = ({ isLoadingCategories, categories }) => {
                     </div>
                 </NavLink>
                 <ul className={clsx(styles.nav, isNavOpen && styles.navOpen)} ref={navRef}>
-                    <li className={styles.navItem}>
-                        <NavLink to="/" exact className={styles.navLink} activeClassName={styles.navLinkActive}>
-                            Home
-                        </NavLink>
-                    </li>
+                    
 
                     {isLoadingCategories ? (
-                        <span>loading categories...</span>
+                        <Loader />
                     ) : (
-                            categories.map((category) => {
-                                const { name, slug } = category;
-                                /* in this case, categories are unique, therefore can be used as key */
-                                return <li className={styles.navItem} key={slug}>
-                                    <NavLink to={`/category/${slug}`} className={styles.navLink} activeClassName={styles.navLinkActive}>
-                                        {name}
+                            <>
+                                <li className={styles.navItem}>
+                                    <NavLink to="/" exact className={styles.navLink} activeClassName={styles.navLinkActive}>
+                                        Home
                                     </NavLink>
                                 </li>
-                            })
+                                {
+                                    categories.map((category) => {
+                                        const { name, slug } = category;
+                                        return <li className={styles.navItem} key={slug}>
+                                            <NavLink to={`/category/${slug}`} className={styles.navLink} activeClassName={styles.navLinkActive}>
+                                                {name}
+                                            </NavLink>
+                                        </li>
+                                    })
+                                }
+                            </>
                         )}
                 </ul>
                 <button className={styles.navToggler} onClick={toggleNav}>
