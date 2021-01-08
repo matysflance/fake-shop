@@ -2,7 +2,9 @@ import React from 'react';
 import { useBasketContext } from '../../../context/BasketContextProvider';
 import { formatPrice } from '../../../util';
 
-import './BasketItem.css';
+import { Button } from '../../Button/Button';
+
+import styles from './BasketItem.module.css';
 
 const calculateSubtotal = (price, quantity) => price * quantity;
 
@@ -29,25 +31,26 @@ export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
     }
 
     return (
-        <li className="basket__item basket-item">
-            <div className="basket-item__info-wrapper">
-                <div className="basket-item__info">
-                    <img src={image} alt={title} className="basket-item__image" />
-                    <p>{title}</p> (<span className="sr-only">Product price:</span>&pound;{formatPrice(price)})
-                </div>
-                <div className="basket-item__subtotal">
-                    Subtotal: &pound;{formatPrice(calculateSubtotal(price, quantity))}
-                </div>
-            </div>
-            <div className="basket-item__qty">
-                <span className="sr-only">Quantity:</span>
-                <form className="basket-item__qty-form" onSubmit={(e) => e.preventDefault()}>
-                    <button type="button" onClick={handleDecreaseQuantity}>-</button>
-                    <input type="number" className="basket-item__qty-field" name={`qty_${id}`} id={`qty_${id}`} value={quantity} onChange={(e) => handleChangeQuantity(e)}/>
-                    <button type="button" onClick={handleIncreaseQuantity}>+</button>
+        <li className={styles.basketItem}>
+            <div className={styles.infoWrapper}>
+                <h4 className={styles.name}>
+                    {title}
+                </h4>
+                <p className={styles.unitPrice}>Product price: <span className={styles.price}>&pound;{formatPrice(price)}</span></p>
+                <form className={styles.qtyForm} onSubmit={(e) => e.preventDefault()}>
+                    <div className={styles.formGroup}>
+                        <Button type="button" additionalClasses={styles.qtyButton} handleClick={handleDecreaseQuantity}>-</Button>
+                        <span className="sr-only">Quantity:</span>
+                        <input type="number" className={styles.qtyField} name={`qty_${id}`} id={`qty_${id}`} value={quantity} onChange={(e) => handleChangeQuantity(e)}/>
+                        <Button type="button" additionalClasses={styles.qtyButton} handleClick={handleIncreaseQuantity}>+</Button>
+                    </div>
                 </form>
-                <button onClick={handleRemoveItem}>X</button>
+                <p className={styles.subtotal}>Subtotal: <span className={styles.price}>&pound;{formatPrice(calculateSubtotal(price, quantity))}</span></p>
             </div>
+            <div className={styles.thumbnailWrapper}>
+                <img src={image} alt={title} className={styles.thumbnail} />
+            </div>
+            <Button type="button" handleClick={handleRemoveItem} additionalClasses={[styles.deleteBtn]}>X</Button>
         </li>
     )
 }

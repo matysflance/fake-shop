@@ -1,0 +1,103 @@
+.basketItem {
+  display: flex;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  max-height: 18rem;
+  font-size: 1.3rem;
+}
+
+.thumbnailWrapper {
+  flex: 0 0 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1.5rem;
+}
+
+.thumbnail {
+  max-height: 100%;
+  width: auto;
+}
+
+.infoWrapper {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.unitPrice {
+  margin-top: 0.5rem;
+}
+
+.qtyForm {
+  margin: 0.5rem 0;
+  display: flex;
+  align-self: flex-start;
+}
+
+.formGroup {
+  display: flex;
+}
+
+.qtyField {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  text-align: center;
+}
+
+.subtotal {
+  margin-top: auto;
+  text-align: left;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 0;
+  background-color: #000;
+  color: #fff;
+  width: 4rem;
+  height: 4rem;
+}
+
+@media (min-width: 400px) {
+  .basketItem {
+    font-size: 1.5rem;
+  }
+  .thumbnailWrapper {
+    flex-basis: 10rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .basketItem {
+    max-height: 20rem;
+    font-size: 1.6rem;
+  }
+  .thumbnailWrapper {
+    align-items: start;
+    flex-basis: 15rem;
+    order: 0;
+    margin-left: 0;
+    margin-right: 1.5rem;
+  }
+  .infoWrapper {
+    order: 1;
+  }
+  .name {
+    padding-right: 4rem;
+  }
+  .subtotal {
+    text-align: right;
+  }
+}

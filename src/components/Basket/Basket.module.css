@@ -1,0 +1,35 @@
+.basket {
+  padding: 0.7rem 0;
+  display: flex;
+  justify-content: center;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+}
+
+.sectionHeading {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.products {
+  flex: 1 1 45rem;
+}
+
+.summary {
+  flex: auto;
+  padding: 1.5rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.summaryLabel {
+  font-weight: bold;
+}
+
+.checkoutBtn {
+  margin-top: 2.5rem;
+}
