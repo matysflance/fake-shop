@@ -28,16 +28,10 @@ export const getCategoryNameBySlug = (slug, allCategories) => allCategories.find
 
 export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
   return function (a, b) {
-    //order can only be ASC or DESC
-    if (order !== 'ASC' && order !== 'DESC') { 
-      throw Error(`Invalid order ${order}`);
-    }
-
     if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
       throw Error(`Compared object(s) do not have property '${key}'`);
     }
 
-    //make it case insensitive
     const valA = typeof a[key] === 'string' ? a[key].toUpperCase() : a[key];
     const valB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
 
@@ -53,10 +47,12 @@ export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
 
 export const sortObjectsByKey = (objectsArr, sortBy) => {
   // sortBy format needs to be: "key_order"
+  // regex needs to be updated as multiple '_' shouldn't be allowed
+  if (!new RegExp('[a-zA-Z]*_(ASC|DESC)').test(sortBy)) {
+    throw Error('Invalid sorting string provided.');
+  }
+
   const [key, order] = sortBy.split('_');
-  
-  //check if for any reason key or order are not set (e.g. wrong format of "key_order")
-  if (!key || !order) { throw Error('Key or order not specified.'); }
   
   return [...objectsArr].sort(compareArrayOfObjectsByKey(key, order));
 }
