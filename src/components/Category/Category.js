@@ -4,6 +4,7 @@ import clsx from "clsx";
 import React, { useState } from "react";
 import { ProductCard } from "./ProductCard/ProductCard";
 import { Loader } from "../Loader/Loader";
+import { PageHeading } from "../PageHeading/PageHeading";
 import styles from "./Category.module.css";
 import { getCategoryNameBySlug, sortObjectsByKey } from "../../util";
 
@@ -29,11 +30,9 @@ export const Category = ({ isLoadingProducts, products, categories }) => {
     <section className="container">
       {categories.length ? (
         <>
-          <div className={styles.titleWrapper}>
-            <h2 className={styles.title}>
-              {getCategoryNameBySlug(slug, categories)}
-            </h2>
-          </div>
+          <PageHeading>
+            {getCategoryNameBySlug(slug, categories)}
+          </PageHeading>
           <form>
             <div className={styles.formGroup}>
               <label htmlFor="sortBySelect" className={styles.formLabel}>
