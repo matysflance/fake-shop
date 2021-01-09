@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import './Footer.css';
+import styles from './Footer.module.css';
 
 export const Footer = () => {
-    return (
-        <footer className="footer">
-            <p className="footer__copy">By Sebastian Matysiak</p>
-        </footer>
-    )
-}
+  return (
+    <footer className={styles.footer}>
+      <p className={styles.copy}>By Sebastian Matysiak</p>
+    </footer>
+  );
+};

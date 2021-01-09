@@ -3,18 +3,18 @@ import slugify from 'slugify';
 export const formatPrice = (price) => parseFloat(price).toFixed(2);
 
 export const createSlugsForCategories = (categories) => {
-    return categories.map(category => {
-        return {
-            name: category,
-            slug: slugify(category)
-        }
-    })
-}
+  return categories.map((category) => {
+    return {
+      name: category,
+      slug: slugify(category),
+    };
+  });
+};
 
 export const getCategoryNameBySlug = (slug, allCategories) => {
-  const category = allCategories.find(category => category.slug === slug);
+  const category = allCategories.find((category) => category.slug === slug);
   return category ? category.name : '';
-}
+};
 
 export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
   return function (a, b) {
@@ -26,14 +26,14 @@ export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
     const valB = typeof b[key] === 'string' ? b[key].toUpperCase() : b[key];
 
     if (valA > valB) {
-        return order === 'DESC' ? -1 : 1;
+      return order === 'DESC' ? -1 : 1;
     } else if (valA < valB) {
-        return order === 'DESC' ? 1 : -1;
+      return order === 'DESC' ? 1 : -1;
     } else {
-        return 0;
+      return 0;
     }
-  }
-}
+  };
+};
 
 export const sortObjectsByKey = (objectsArr, sortBy) => {
   // sortBy format needs to be: "key_order"
@@ -44,12 +44,14 @@ export const sortObjectsByKey = (objectsArr, sortBy) => {
   }
 
   const [key, order] = sortBy.split('_');
-  
+
   return [...objectsArr].sort(compareArrayOfObjectsByKey(key, order));
-}
+};
 
-export const filterObjectsByKey = (objectsArr, key, searchValue) => objectsArr.filter((obj) => {
-  return obj[key].toLowerCase().includes(searchValue.toLowerCase());
-})
+export const filterObjectsByKey = (objectsArr, key, searchValue) =>
+  objectsArr.filter((obj) => {
+    return obj[key].toLowerCase().includes(searchValue.toLowerCase());
+  });
 
-export const capitalize = (str) => str.replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+export const capitalize = (str) =>
+  str.replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));

@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .formGroup {
@@ -33,6 +34,11 @@
   position: relative;
   display: block;
   width: 100%;
+}
+
+.formControl:focus {
+  outline: 3px dashed #000000;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8);
 }
 
 .selectFormControl {

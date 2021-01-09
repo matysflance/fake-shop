@@ -7,7 +7,6 @@ import { AlertContextProvider } from './context/AlertContextProvider';
 import { BasketContextProvider } from './context/BasketContextProvider';
 import { GlobalErrorBoundary } from './ErrorBoundaries/GlobalErrorBoundary';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <GlobalErrorBoundary>
@@ -18,7 +17,7 @@ ReactDOM.render(
       </AlertContextProvider>
     </GlobalErrorBoundary>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

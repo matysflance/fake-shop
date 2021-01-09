@@ -20,7 +20,14 @@
   align-items: center;
   color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 700;
+  padding: 0.5rem;
+  border: 2px dashed transparent;
+  outline: none;
+}
+
+.basketLink:focus {
+  border-color: var(--navbar-color-light);
 }
 
 .basketIcon {
@@ -50,15 +57,24 @@
   height: 0;
   overflow: hidden;
   background-color: var(--navbar-color-dark);
-  transition: 0.3s height cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.navOpen {
+@media (prefers-reduced-motion: reduce) {
+  .nav {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nav {
+    transition: 0.3s height cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
 }
 
 .navItem {
   list-style: none;
   text-align: center;
+  margin: 0 0.5rem;
 }
 
 .navLink {
@@ -66,15 +82,16 @@
   display: block;
   padding: 1rem;
   font-size: 1.5rem;
-
   text-decoration: none;
   text-transform: capitalize;
   font-family: var(--font-secondary);
   color: var(--navbar-color-light);
+  border: 2px dashed transparent;
+  outline: none;
 }
 
 .navLink:hover::before {
-  content: "";
+  content: '';
   position: absolute;
   height: 3px;
   bottom: 0;
@@ -86,6 +103,18 @@
 .navLinkActive {
   background-color: var(--navbar-color-light);
   color: var(--navbar-color-dark);
+}
+
+.navLink:focus,
+.navLinkActive:focus {
+  font-weight: 700;
+}
+.navLink:focus {
+  border-color: var(--navbar-color-light);
+}
+
+.navLinkActive:focus {
+  border-color: var(--navbar-color-dark);
 }
 
 .navToggler {
@@ -110,7 +139,7 @@
 
 .navTogglerBar::before,
 .navTogglerBar::after {
-  content: "";
+  content: '';
   position: absolute;
   height: 4px;
   width: 3rem;

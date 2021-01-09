@@ -6,8 +6,41 @@
   cursor: pointer;
   display: block;
   border: 2px solid #000;
+  text-align: center;
+  line-height: 1.1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn {
+    transition: 0.15s background-color cubic-bezier(0.47, 0, 0.745, 0.715),
+      0.15s color cubic-bezier(0.47, 0, 0.745, 0.715);
+  }
 }
 
 .btnBlock {
   width: 100%;
+}
+
+a.btn {
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #000;
+  color: #f7f7f7;
+}
+
+.btn:focus {
+  outline: 3px dashed #000000;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8);
+}
+
+.btn:active {
+  background-color: #9c9c9c;
 }

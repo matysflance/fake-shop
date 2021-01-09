@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
@@ -18,11 +18,11 @@ export const App = () => {
         <Header categories={categories} setCategories={setCategories} />
         <main className="main-content">
           <Switch>
-            <Route exact path='/'>
+            <Route exact path="/">
               <Home />
             </Route>
-            <Route 
-              path='/category/:slug'
+            <Route
+              path="/category/:slug"
               children={
                 <Category
                   isLoadingProducts={isLoadingProducts}
@@ -34,9 +34,9 @@ export const App = () => {
               }
             />
             <Route exact path="/category">
-                <Redirect to="/category/all" />
+              <Redirect to="/category/all" />
             </Route>
-            <Route exact path='/basket'>
+            <Route exact path="/basket">
               <Basket />
             </Route>
           </Switch>
@@ -45,4 +45,4 @@ export const App = () => {
       </div>
     </Router>
   );
-}
+};
