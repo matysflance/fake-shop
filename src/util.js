@@ -51,3 +51,5 @@ export const sortObjectsByKey = (objectsArr, sortBy) => {
 export const filterObjectsByKey = (objectsArr, key, searchValue) => objectsArr.filter((obj) => {
   return obj[key].toLowerCase().includes(searchValue.toLowerCase());
 })
+
+export const capitalize = (str) => str.replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));

@@ -6,7 +6,7 @@ import { ProductCard } from "./ProductCard/ProductCard";
 import { Loader } from "../Loader/Loader";
 import { PageHeading } from "../PageHeading/PageHeading";
 import styles from "./Category.module.css";
-import { getCategoryNameBySlug, sortObjectsByKey, filterObjectsByKey } from "../../util";
+import { getCategoryNameBySlug, sortObjectsByKey, filterObjectsByKey, capitalize } from "../../util";
 import { useAlertContext } from '../../context/AlertContextProvider';
 import { fetchProducts } from '../../api';
 
@@ -17,7 +17,7 @@ export const Category = ({ isLoadingProducts, products, setProducts, setIsLoadin
   const [sortBy, setSortBy] = useState("title_ASC");
   const [search, setSearch] = useState('');
   const [productsPerPage, setProductsPerPage] = useState(10);
-  const categoryName = getCategoryNameBySlug(slug, categories);
+  const categoryName = capitalize(getCategoryNameBySlug(slug, categories));
 
   useEffect(() => {
     const getProducts = async () => {
