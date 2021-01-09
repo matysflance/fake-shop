@@ -4,17 +4,19 @@ export const formatPrice = (price) => parseFloat(price).toFixed(2);
 
 export const getUniqueCategories = (products) => {
   const allCategories = getAllCategories(products);
-  return allCategories.filter(({name}, index) => allCategories.findIndex(el => el.name === name) === index);
-}
+  const uniqueCategories = allCategories.filter(({name}, index) => allCategories.findIndex(el => el.name === name) === index);
 
-// looks a bit ugly, but when I tried making it a 1-liner it was hard to understand what it's doing
-// basically, it generates all categories in form of array of objects containing name and slug of category (used for pretty URLs)
-export const getAllCategories = (products) => {
   return [
+    ...uniqueCategories,
     {
       name: 'all',
       slug: 'all'
-    },
+    }
+  ]
+}
+
+export const getAllCategories = (products) => {
+  return [
     ...products.map(product => {
       return {
         name: product.category,
@@ -48,7 +50,8 @@ export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
 export const sortObjectsByKey = (objectsArr, sortBy) => {
   // sortBy format needs to be: "key_order"
   // regex needs to be updated as multiple '_' shouldn't be allowed
-  if (!new RegExp('[a-zA-Z]*_(ASC|DESC)').test(sortBy)) {
+  const correctFormatRegex = new RegExp('[a-zA-Z]*_(ASC|DESC)');
+  if (!correctFormatRegex.test(sortBy)) {
     throw Error('Invalid sorting string provided.');
   }
 
