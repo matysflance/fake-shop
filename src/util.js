@@ -59,3 +59,7 @@ export const sortObjectsByKey = (objectsArr, sortBy) => {
   
   return [...objectsArr].sort(compareArrayOfObjectsByKey(key, order));
 }
+
+export const filterObjectsByKey = (objectsArr, key, searchValue) => objectsArr.filter((obj) => {
+  return obj[key].toLowerCase().includes(searchValue.toLowerCase());
+})
