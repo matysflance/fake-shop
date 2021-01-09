@@ -45,13 +45,27 @@ body {
   /* 3 */
 }
 
+/* sticky footer */
+.site-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
 .container {
   max-width: 120rem;
   margin: 0 auto;
   padding: 0 1.8rem;
 }
 
-.page-title {
+.text-center {
   text-align: center;
+}
+
+.my-1 {
   margin: 1rem 0;
 }

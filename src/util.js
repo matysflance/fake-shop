@@ -2,31 +2,19 @@ import slugify from 'slugify';
 
 export const formatPrice = (price) => parseFloat(price).toFixed(2);
 
-export const getUniqueCategories = (products) => {
-  const allCategories = getAllCategories(products);
-  const uniqueCategories = allCategories.filter(({name}, index) => allCategories.findIndex(el => el.name === name) === index);
-
-  return [
-    {
-      name: 'all',
-      slug: 'all'
-    },
-    ...uniqueCategories
-  ]
+export const createSlugsForCategories = (categories) => {
+    return categories.map(category => {
+        return {
+            name: category,
+            slug: slugify(category)
+        }
+    })
 }
 
-export const getAllCategories = (products) => {
-  return [
-    ...products.map(product => {
-      return {
-        name: product.category,
-        slug: slugify(product.category)
-      }
-    })
-  ]
-};
-
-export const getCategoryNameBySlug = (slug, allCategories) => allCategories.find(category => category.slug === slug).name;
+export const getCategoryNameBySlug = (slug, allCategories) => {
+  const category = allCategories.find(category => category.slug === slug);
+  return category ? category.name : '';
+}
 
 export const compareArrayOfObjectsByKey = (key, order = 'ASC') => {
   return function (a, b) {
