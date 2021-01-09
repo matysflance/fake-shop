@@ -7,11 +7,11 @@ export const getUniqueCategories = (products) => {
   const uniqueCategories = allCategories.filter(({name}, index) => allCategories.findIndex(el => el.name === name) === index);
 
   return [
-    ...uniqueCategories,
     {
       name: 'all',
       slug: 'all'
-    }
+    },
+    ...uniqueCategories
   ]
 }
 
