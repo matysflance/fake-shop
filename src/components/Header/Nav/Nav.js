@@ -3,7 +3,7 @@ import styles from './Nav.module.css';
 import { NavLink } from 'react-router-dom';
 import { useBasketContext } from '../../../context/BasketContextProvider';
 import { useAlertContext } from '../../../context/AlertContextProvider';
-import { formatPrice, createSlugsForCategories } from '../../../util';
+import { formatPrice, createSlugsForCategories, capitalize } from '../../../util';
 import { fetchCategories } from '../../../api';
 
 const calculateNavItemsHeight = (navDOMElements) =>
@@ -101,7 +101,7 @@ export const Nav = ({ categories, setCategories }) => {
                     className={styles.navLink}
                     activeClassName={styles.navLinkActive}
                   >
-                    {name}
+                    {capitalize(name)}
                   </NavLink>
                 </li>
               );

@@ -49,6 +49,7 @@ export const ProductCard = ({ product }) => {
               value={quantity}
               onChange={(e) => setQuantity(parseInt(e.target.value))}
               autoComplete="off"
+              aria-label="Select quantity field"
             >
               <option value="1">1</option>
               <option value="2">2</option>
