@@ -48,6 +48,7 @@ export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
               type="button"
               additionalClasses={styles.qtyButton}
               handleClick={handleDecreaseQuantity}
+              aria-label="Decrease quantity"
             >
               -
             </Button>
@@ -65,13 +66,14 @@ export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
               type="button"
               additionalClasses={styles.qtyButton}
               handleClick={handleIncreaseQuantity}
+              aria-label="Increase quantity"
             >
               +
             </Button>
           </div>
         </form>
         <p className={styles.subtotal}>
-          Subtotal:{' '}
+          Subtotal:
           <span className={styles.price}>
             &pound;{formatPrice(calculateSubtotal(price, quantity))}
           </span>
@@ -80,7 +82,12 @@ export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
       <div className={styles.thumbnailWrapper}>
         <img src={image} alt={title} className={styles.thumbnail} />
       </div>
-      <Button type="button" handleClick={handleRemoveItem} additionalClasses={[styles.deleteBtn]}>
+      <Button
+        type="button"
+        handleClick={handleRemoveItem}
+        additionalClasses={[styles.deleteBtn]}
+        aria-label="Remove item from basket"
+      >
         X
       </Button>
     </li>
