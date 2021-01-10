@@ -74,6 +74,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  background-color: #fff;
   font-size: 1.7rem;
   margin-left: auto;
   flex-basis: 10rem;

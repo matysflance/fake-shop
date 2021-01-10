@@ -5,3 +5,12 @@
   align-items: center;
   background-color: #fff;
 }
+
+.logoLink {
+  text-decoration: none;
+  margin: 1rem;
+}
+
+.logoLink:focus {
+  outline: 2px dashed #000;
+}

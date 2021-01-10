@@ -52,7 +52,7 @@ export const Nav = ({ categories, setCategories }) => {
 
   return (
     <nav className={styles.navbar} role="navigation">
-      <NavLink to="/basket" className={styles.basketLink}>
+      <NavLink to="/basket" className={styles.basketLink} onClick={toggleNav}>
         <svg
           className={styles.basketIcon}
           viewBox="0 0 235 235"
@@ -88,6 +88,7 @@ export const Nav = ({ categories, setCategories }) => {
                 exact
                 className={styles.navLink}
                 activeClassName={styles.navLinkActive}
+                onClick={toggleNav}
               >
                 Home
               </NavLink>
@@ -100,6 +101,7 @@ export const Nav = ({ categories, setCategories }) => {
                     to={`/category/${slug}`}
                     className={styles.navLink}
                     activeClassName={styles.navLinkActive}
+                    onClick={toggleNav}
                   >
                     {capitalize(name)}
                   </NavLink>

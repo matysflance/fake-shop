@@ -1,7 +1,7 @@
 .logoWrapper {
   display: flex;
   align-items: center;
-  padding: 1.6rem;
+  padding: 1rem;
 }
 
 .logoIcon {
@@ -35,4 +35,19 @@
   color: #888888;
   margin: 0;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  .logoIcon {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .logoHeading {
+    font-size: 4rem;
+  }
+
+  .logoSubheading {
+    font-size: 1.5rem;
+  }
 }
