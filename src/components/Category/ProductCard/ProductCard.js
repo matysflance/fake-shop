@@ -9,7 +9,7 @@ import styles from './ProductCard.module.css';
 
 const calculateProductTotal = (price, quantity) => price * quantity;
 
-export const ProductCard = ({ product }) => {
+export const ProductCard = React.memo(({ product }) => {
   const { category, description, id, image, price, title } = product;
 
   const { displayAlert } = useAlertContext();
@@ -22,7 +22,7 @@ export const ProductCard = ({ product }) => {
     setQuantity(1);
     displayAlert(true, 'success', 'Product added to the basket!');
   };
-
+  console.log('ProductCard render');
   return (
     <article className={styles.product} aria-label="Product card">
       <div className={styles.imageWrapper}>
@@ -65,4 +65,4 @@ export const ProductCard = ({ product }) => {
       </footer>
     </article>
   );
-};
+});

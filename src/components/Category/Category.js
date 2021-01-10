@@ -29,6 +29,7 @@ export const Category = ({
   const [productsPerPage, setProductsPerPage] = useState(10);
   const categoryName = capitalize(getCategoryNameBySlug(slug, categories));
 
+  console.log('Category render');
   useEffect(() => {
     const getProducts = async () => {
       setIsLoadingProducts(true);

@@ -34,7 +34,7 @@ export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
   const handleRemoveItem = () => {
     removeItemFromBasket(id);
   };
-
+  console.log('BasketItem render');
   return (
     <li className={styles.basketItem}>
       <div className={styles.infoWrapper}>
