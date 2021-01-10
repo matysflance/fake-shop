@@ -3,7 +3,7 @@ import styles from './Loader.module.css';
 
 export const Loader = () => {
   return (
-    <div class={styles.loader} role="status">
+    <div className={styles.loader} role="status">
       Loading...
     </div>
   );
