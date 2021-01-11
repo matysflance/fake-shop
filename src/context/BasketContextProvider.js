@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext, memo } from 'react';
+import { useState, useEffect, useContext, createContext, memo, useCallback } from 'react';
 
 const BasketContext = createContext();
 
@@ -12,61 +12,65 @@ const calculateBasketTotal = (basket) =>
 
 export const BasketContextProvider = memo(({ children }) => {
   const [basket, setBasket] = useState([]);
-  const [basketCount, setBasketCount] = useState(0);
-  const [basketTotal, setBasketTotal] = useState(0);
+  const basketCount = calculateBasketCount(basket);
+  const basketTotal = calculateBasketTotal(basket);
 
   // basket logic
-  const addProductToBasket = (product) => {
+  const addProductToBasket = useCallback((product) => {
     const { id, quantity } = product;
     const existingBasketItem = basket.some((item) => item.id === id);
 
     if (existingBasketItem) {
-      const newBasket = basket.map((item) => {
-        return item.id === id ? { ...item, quantity: item.quantity + quantity } : item;
-      });
-      setBasket(newBasket);
+      setBasket((prev) =>
+        prev.map((item) => {
+          return item.id === id ? { ...item, quantity: item.quantity + quantity } : item;
+        }),
+      );
     } else {
-      const newBasket = [...basket, { ...product }];
-      setBasket(newBasket);
+      setBasket((prev) => {
+        const existingBasketItem = prev.some((item) => item.id === id);
+        if (existingBasketItem) {
+          return prev.map((item) => {
+            return item.id === id ? { ...item, quantity: item.quantity + quantity } : item;
+          });
+        } else {
+          return [...prev, { ...product }];
+        }
+      });
     }
-  };
+  }, []);
 
-  const increaseQuantity = (productId) => {
-    const newBasket = basket.map((item) => {
-      return item.id === productId ? { ...item, quantity: item.quantity + 1 } : item;
-    });
+  const increaseQuantity = useCallback((productId) => {
+    setBasket((prev) =>
+      prev.map((item) => {
+        return item.id === productId ? { ...item, quantity: item.quantity + 1 } : item;
+      }),
+    );
+  }, []);
 
-    setBasket(newBasket);
-  };
+  const decreaseQuantity = useCallback((productId) => {
+    setBasket((prev) =>
+      prev.map((item) => {
+        return item.id === productId ? { ...item, quantity: item.quantity - 1 } : item;
+      }),
+    );
+  }, []);
 
-  const decreaseQuantity = (productId) => {
-    const newBasket = basket.map((item) => {
-      return item.id === productId ? { ...item, quantity: item.quantity - 1 } : item;
-    });
-
-    setBasket(newBasket);
-  };
-
-  const updateQuantity = (productId, newQuantity) => {
+  const updateQuantity = useCallback((productId, newQuantity) => {
     if (newQuantity > 0) {
-      const newBasket = basket.map((item) => {
-        return item.id === productId ? { ...item, quantity: newQuantity } : item;
-      });
-      setBasket(newBasket);
+      setBasket((prev) =>
+        prev.map((item) => {
+          return item.id === productId ? { ...item, quantity: newQuantity } : item;
+        }),
+      );
     } else {
-      const newBasket = basket.filter((item) => item.id !== productId);
-      setBasket(newBasket);
+      setBasket((prev) => prev.filter((item) => item.id !== productId));
     }
-  };
+  }, []);
 
-  const removeItemFromBasket = (productId) => {
-    setBasket(basket.filter((item) => item.id !== productId));
-  };
-
-  useEffect(() => {
-    setBasketCount(calculateBasketCount(basket));
-    setBasketTotal(calculateBasketTotal(basket));
-  }, [basket]);
+  const removeItemFromBasket = useCallback((productId) => {
+    setBasket((prev) => prev.filter((item) => item.id !== productId));
+  }, []);
 
   return (
     <BasketContext.Provider
