@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, memo } from 'react';
 import { useAlertContext } from '../../../context/AlertContextProvider';
 import { useBasketContext } from '../../../context/BasketContextProvider';
 import { formatPrice } from '../../../util';
@@ -9,7 +9,7 @@ import styles from './ProductCard.module.css';
 
 const calculateProductTotal = (price, quantity) => price * quantity;
 
-export const ProductCard = React.memo(({ product }) => {
+export const ProductCard = memo(({ product }) => {
   const { category, description, id, image, price, title } = product;
 
   const { displayAlert } = useAlertContext();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import styles from './Nav.module.css';
 import { NavLink } from 'react-router-dom';
 import { useBasketContext } from '../../../context/BasketContextProvider';
@@ -12,7 +12,7 @@ const calculateNavItemsHeight = (navDOMElements) =>
     0,
   );
 
-export const Nav = ({ categories, setCategories }) => {
+export const Nav = memo(({ categories, setCategories }) => {
   const { basketCount, basketTotal } = useBasketContext();
   const { displayAlert } = useAlertContext();
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -38,7 +38,7 @@ export const Nav = ({ categories, setCategories }) => {
     };
 
     getCategories();
-  }, []);
+  }, [displayAlert, setCategories]);
 
   const navRef = useRef(null);
 
@@ -121,4 +121,4 @@ export const Nav = ({ categories, setCategories }) => {
       </button>
     </nav>
   );
-};
+});

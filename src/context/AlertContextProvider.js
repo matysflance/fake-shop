@@ -1,17 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, createContext, memo, useCallback } from 'react';
 import { Alert } from '../components/Alert/Alert';
 
-const AlertContext = React.createContext();
+const AlertContext = createContext();
 
-export const AlertContextProvider = ({ children }) => {
+export const AlertContextProvider = memo(({ children }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertSettings, setAlertSettings] = useState({});
 
   // alerts logic
-  const displayAlert = (show = false, type = '', message = '') => {
-    setShowAlert(show);
-    setAlertSettings({ type, message });
-  };
+  const displayAlert = useCallback(
+    (show = false, type = '', message = '') => {
+      setShowAlert(show);
+      setAlertSettings({ type, message });
+    },
+    [setShowAlert, setAlertSettings],
+  );
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -35,7 +38,7 @@ export const AlertContextProvider = ({ children }) => {
       {children}
     </AlertContext.Provider>
   );
-};
+});
 
 export const useAlertContext = () => {
   return useContext(AlertContext);

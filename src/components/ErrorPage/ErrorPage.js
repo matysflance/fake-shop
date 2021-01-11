@@ -1,9 +1,8 @@
-import React from 'react';
+import { memo } from 'react';
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
-import { Link } from 'react-router-dom';
 
-export const ErrorPage = () => {
+export const ErrorPage = memo(() => {
   return (
     <div className="site-wrapper">
       <Header isLoadingCategories={false} categories={[]} />
@@ -13,4 +12,4 @@ export const ErrorPage = () => {
       <Footer />
     </div>
   );
-};
+});

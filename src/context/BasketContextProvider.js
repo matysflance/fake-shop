@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, createContext, memo } from 'react';
 
-const BasketContext = React.createContext();
+const BasketContext = createContext();
 
 const calculateBasketCount = (basket) =>
   basket.reduce((currentCount, item) => item.quantity + currentCount, 0);
@@ -10,7 +10,7 @@ const calculateBasketTotal = (basket) =>
     0,
   );
 
-export const BasketContextProvider = ({ children }) => {
+export const BasketContextProvider = memo(({ children }) => {
   const [basket, setBasket] = useState([]);
   const [basketCount, setBasketCount] = useState(0);
   const [basketTotal, setBasketTotal] = useState(0);
@@ -85,7 +85,7 @@ export const BasketContextProvider = ({ children }) => {
       {children}
     </BasketContext.Provider>
   );
-};
+});
 
 export const useBasketContext = () => {
   return useContext(BasketContext);
