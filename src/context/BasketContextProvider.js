@@ -18,26 +18,16 @@ export const BasketContextProvider = memo(({ children }) => {
   // basket logic
   const addProductToBasket = useCallback((product) => {
     const { id, quantity } = product;
-    const existingBasketItem = basket.some((item) => item.id === id);
-
-    if (existingBasketItem) {
-      setBasket((prev) =>
-        prev.map((item) => {
+    setBasket((prev) => {
+      const existingBasketItem = prev.some((item) => item.id === id);
+      if (existingBasketItem) {
+        return prev.map((item) => {
           return item.id === id ? { ...item, quantity: item.quantity + quantity } : item;
-        }),
-      );
-    } else {
-      setBasket((prev) => {
-        const existingBasketItem = prev.some((item) => item.id === id);
-        if (existingBasketItem) {
-          return prev.map((item) => {
-            return item.id === id ? { ...item, quantity: item.quantity + quantity } : item;
-          });
-        } else {
-          return [...prev, { ...product }];
-        }
-      });
-    }
+        });
+      } else {
+        return [...prev, { ...product }];
+      }
+    });
   }, []);
 
   const increaseQuantity = useCallback((productId) => {
