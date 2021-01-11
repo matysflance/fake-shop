@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext, memo, useCallback } from 'react';
+import { useState, useContext, createContext, memo, useCallback } from 'react';
 
 const BasketContext = createContext();
 

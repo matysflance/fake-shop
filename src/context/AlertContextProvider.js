@@ -8,13 +8,10 @@ export const AlertContextProvider = memo(({ children }) => {
   const [alertSettings, setAlertSettings] = useState({});
 
   // alerts logic
-  const displayAlert = useCallback(
-    (show = false, type = '', message = '') => {
-      setShowAlert(show);
-      setAlertSettings({ type, message });
-    },
-    [setShowAlert, setAlertSettings],
-  );
+  const displayAlert = useCallback((show = false, type = '', message = '') => {
+    setShowAlert(show);
+    setAlertSettings({ type, message });
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
