@@ -2,7 +2,6 @@ import { useState, memo } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
-import { Home } from '../Home/Home';
 import { Category } from '../Category/Category';
 import { Basket } from '../Basket/Basket';
 import './App.css';
@@ -19,7 +18,7 @@ export const App = memo(() => {
         <main className="main-content">
           <Switch>
             <Route exact path="/">
-              <Home />
+              <Redirect to="/category/all" />
             </Route>
             <Route
               path="/category/:slug"
