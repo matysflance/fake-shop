@@ -1,8 +1,7 @@
-import { memo } from 'react';
 import styles from './Alert.module.css';
 import clsx from 'clsx';
 
-export const Alert = memo(({ message, type }) => {
+export const Alert = ({ message, type }) => {
   return (
     <div
       className={clsx(styles.alert, type === 'danger' ? styles.alertDanger : styles.alertSuccess)}
@@ -12,4 +11,4 @@ export const Alert = memo(({ message, type }) => {
       {message}
     </div>
   );
-});
+};

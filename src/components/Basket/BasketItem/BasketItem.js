@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { useBasketContext } from '../../../context/BasketContextProvider';
 import { formatPrice } from '../../../util';
 
@@ -8,7 +7,7 @@ import styles from './BasketItem.module.css';
 
 const calculateSubtotal = (price, quantity) => price * quantity;
 
-export const BasketItem = memo(({ item: { id, title, image, quantity, price } }) => {
+export const BasketItem = ({ item: { id, title, image, quantity, price } }) => {
   const {
     increaseQuantity,
     decreaseQuantity,
@@ -92,4 +91,4 @@ export const BasketItem = memo(({ item: { id, title, image, quantity, price } })
       </Button>
     </li>
   );
-});
+};

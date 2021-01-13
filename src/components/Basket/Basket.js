@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import { BasketItem } from './BasketItem/BasketItem';
 import { PageHeading } from '../PageHeading/PageHeading';
 import { Button } from '../Button/Button';
@@ -9,7 +7,7 @@ import { formatPrice } from '../../util';
 
 import styles from './Basket.module.css';
 
-export const Basket = memo(() => {
+export const Basket = () => {
   const { basket, basketTotal } = useBasketContext();
 
   const handleCheckout = () => {
@@ -53,4 +51,4 @@ export const Basket = memo(() => {
       </div>
     </section>
   );
-});
+};

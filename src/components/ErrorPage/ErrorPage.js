@@ -1,8 +1,7 @@
-import { memo } from 'react';
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
 
-export const ErrorPage = memo(() => {
+export const ErrorPage = () => {
   return (
     <div className="site-wrapper">
       <Header isLoadingCategories={false} categories={[]} />
@@ -12,4 +11,4 @@ export const ErrorPage = memo(() => {
       <Footer />
     </div>
   );
-});
+};

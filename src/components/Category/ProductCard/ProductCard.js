@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState } from 'react';
 import { useAlertContext } from '../../../context/AlertContextProvider';
 import { useBasketContext } from '../../../context/BasketContextProvider';
 import { formatPrice } from '../../../util';
@@ -9,7 +9,7 @@ import styles from './ProductCard.module.css';
 
 const calculateProductTotal = (price, quantity) => price * quantity;
 
-export const ProductCard = memo(({ product }) => {
+export const ProductCard = ({ product }) => {
   const { category, description, id, image, price, title } = product;
 
   const { displayAlert } = useAlertContext();
@@ -65,4 +65,4 @@ export const ProductCard = memo(({ product }) => {
       </footer>
     </article>
   );
-});
+};

@@ -1,7 +1,6 @@
-import { memo } from 'react';
 import styles from './Logo.module.css';
 
-export const Logo = memo(() => {
+export const Logo = () => {
   return (
     <div className={styles.logoWrapper}>
       <svg
@@ -26,4 +25,4 @@ export const Logo = memo(() => {
       </div>
     </div>
   );
-});
+};

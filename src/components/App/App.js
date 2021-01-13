@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
@@ -6,7 +6,7 @@ import { Category } from '../Category/Category';
 import { Basket } from '../Basket/Basket';
 import './App.css';
 
-export const App = memo(() => {
+export const App = () => {
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -44,4 +44,4 @@ export const App = memo(() => {
       </div>
     </Router>
   );
-});
+};
