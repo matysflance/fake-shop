@@ -1,4 +1,18 @@
-# Getting Started with Create React App
+# Fake Shop - my first React project
+
+I've built this project in order to get a good grasp on React.js basic functionality. Below are some techniques/mechanisms I used:
+
+✅ Hooks - useState, useEffect + useCallback for optimization
+✅ Data fetching (https://fakestoreapi.com/) using Async/Await
+✅ ContextAPI
+✅ React Router
+✅ ErrorBoundaries
+✅ CSS Modules
+
+![Short showcase GIF on desktop](https://media.giphy.com/media/Bs4xXsmSaPJOqxIvRm/giphy.gif)
+![Short showcase GIF on mobile](https://media.giphy.com/media/vgiNSniNSxHSZgynYf/giphy.gif)
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
