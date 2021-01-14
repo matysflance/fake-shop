@@ -12,6 +12,12 @@
   min-width: 20rem;
 }
 
+@media (min-width: 768px) {
+  .formGroup {
+    flex: 1 0 calc(25% - 1rem);
+  }
+}
+
 .formLabel {
   margin-right: 2rem;
 }
