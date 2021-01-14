@@ -21,7 +21,7 @@ export const Category = withRouter(({ history }) => {
   const { slug } = useParams();
   const [sortBy, setSortBy] = useState('title_ASC');
   const [search, setSearch] = useState('');
-  const [ProductsLimit, setProductsLimit] = useState(5);
+  const [numberOfResults, setNumberOfResults] = useState(10);
   const [selectedCategory, setSelectedCategory] = useState(slug);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [products, setProducts] = useState([]);
@@ -41,10 +41,14 @@ export const Category = withRouter(({ history }) => {
       }
     };
 
+    getCategories();
+  }, [displayAlert]);
+
+  useEffect(() => {
     const getProducts = async () => {
       setIsLoadingProducts(true);
       try {
-        const products = await fetchProducts();
+        const products = await fetchProducts(slug, numberOfResults);
         setProducts(products);
       } catch (error) {
         displayAlert(true, 'danger', 'Could not load the products. Please refresh and try again.');
@@ -53,37 +57,18 @@ export const Category = withRouter(({ history }) => {
       setIsLoadingProducts(false);
     };
 
-    getCategories();
     getProducts();
-  }, [displayAlert]);
-
-  useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const categories = await fetchCategories();
-        setCategories(createSlugsForCategories(['all', ...categories]));
-      } catch (error) {
-        displayAlert(
-          true,
-          'danger',
-          'Could not load the categories. Please refresh and try again.',
-        );
-      }
-    };
-
-    getCategories();
-  }, [displayAlert, setCategories]);
+  }, [displayAlert, slug, numberOfResults]);
 
   const handleSort = (e) => {
     e.preventDefault();
     setSortBy(e.target.value);
   };
 
-  // const handleLimitChange = (e) => {
-  //   e.preventDefault();
-  //   setProductsLimit(e.target.value ? parseInt(e.target.value) : '');
-  //   // ## TODO ##
-  // };
+  const handleLimitChange = (e) => {
+    e.preventDefault();
+    setNumberOfResults(e.target.value ? parseInt(e.target.value) : '');
+  };
 
   const handleCategoryFilter = (e) => {
     e.preventDefault();
@@ -120,20 +105,20 @@ export const Category = withRouter(({ history }) => {
 
   return (
     <section className="container">
-      {categories ? (
-        <PageHeading>{capitalize(getCategoryNameBySlug(slug, categories))}</PageHeading>
-      ) : null}
-
       {!isLoadingProducts && categories ? (
-        <Filters
-          handleCategoryFilter={handleCategoryFilter}
-          handleSort={handleSort}
-          handleSearch={handleSearch}
-          categories={categories}
-          selectedCategory={selectedCategory}
-          sortBy={sortBy}
-          // handleLimitChange={handleLimitChange}
-        />
+        <>
+          <PageHeading>{capitalize(getCategoryNameBySlug(slug, categories))}</PageHeading>
+          <Filters
+            handleCategoryFilter={handleCategoryFilter}
+            handleSort={handleSort}
+            handleSearch={handleSearch}
+            handleLimitChange={handleLimitChange}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            sortBy={sortBy}
+            productsLimit={numberOfResults}
+          />
+        </>
       ) : null}
 
       {isLoadingProducts ? <Loader /> : productsHTML}
