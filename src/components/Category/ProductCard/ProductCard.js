@@ -22,7 +22,7 @@ export const ProductCard = ({ product }) => {
     setQuantity(1);
     displayAlert(true, 'success', 'Product added to the basket!');
   };
-  console.log('ProductCard render');
+
   return (
     <article className={styles.product} aria-label="Product card">
       <div className={styles.imageWrapper}>

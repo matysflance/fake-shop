@@ -13,7 +13,7 @@ export const Basket = () => {
   const handleCheckout = () => {
     alert('Start checkout process');
   };
-  console.log('Basket render');
+
   return (
     <section className="container">
       <PageHeading>Basket</PageHeading>

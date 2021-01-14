@@ -1,184 +1,142 @@
 import { useState, useEffect } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import slugify from 'slugify';
-import clsx from 'clsx';
 import { ProductCard } from './ProductCard/ProductCard';
 import { Loader } from '../Loader/Loader';
 import { PageHeading } from '../PageHeading/PageHeading';
+import { Filters } from './Filters/Filters';
 import styles from './Category.module.css';
 import {
   getCategoryNameBySlug,
   sortObjectsByKey,
   filterObjectsByKey,
   capitalize,
+  createSlugsForCategories,
 } from '../../util';
 import { useAlertContext } from '../../context/AlertContextProvider';
-import { fetchProducts } from '../../api';
+import { fetchProducts, fetchCategories } from '../../api';
 
-export const Category = withRouter(
-  ({ isLoadingProducts, products, setProducts, setIsLoadingProducts, categories, history }) => {
-    const { displayAlert } = useAlertContext();
-    const { slug } = useParams();
-    const [sortBy, setSortBy] = useState('title_ASC');
-    const [search, setSearch] = useState('');
-    // const [productsPerPage, setProductsPerPage] = useState(10);
-    const [selectedCategory, setSelectedCategory] = useState('all');
-    const categoryName = capitalize(getCategoryNameBySlug(slug, categories));
+export const Category = withRouter(({ history }) => {
+  const { displayAlert } = useAlertContext();
+  const { slug } = useParams();
+  const [sortBy, setSortBy] = useState('title_ASC');
+  const [search, setSearch] = useState('');
+  const [ProductsLimit, setProductsLimit] = useState(5);
+  const [selectedCategory, setSelectedCategory] = useState(slug);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-    console.log('Category render');
-    useEffect(() => {
-      const getProducts = async () => {
-        setIsLoadingProducts(true);
-        try {
-          const products = await fetchProducts();
-          setProducts(products);
-        } catch (error) {
-          displayAlert(
-            true,
-            'danger',
-            'Could not load the products. Please refresh and try again.',
-          );
-        }
-
-        setIsLoadingProducts(false);
-      };
-
-      getProducts();
-    }, [setIsLoadingProducts, setProducts, displayAlert]);
-
-    const handleSort = (e) => {
-      e.preventDefault();
-      setSortBy(e.target.value);
-    };
-
-    // const handlePaginateResults = (e) => {
-    //   e.preventDefault();
-    //   setProductsPerPage(e.target.value ? parseInt(e.target.value) : '');
-    //   // ## TODO ##
-    // };
-
-    const handleCategoryFilter = (e) => {
-      e.preventDefault();
-      // setSelectedCategory();
-      // history.push(`/category/${selectedCategory}`);
-    };
-
-    const handleSearch = (e) => {
-      e.preventDefault();
-      setSearch(e.target.value);
-    };
-
-    const getProductsToShow = (catSlug) => {
-      if (catSlug && catSlug !== 'all') {
-        return products.filter((product) => slugify(product.category) === catSlug);
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const categories = await fetchCategories();
+        setCategories(createSlugsForCategories(['all', ...categories]));
+      } catch (error) {
+        displayAlert(
+          true,
+          'danger',
+          'Could not load the categories. Please refresh and try again.',
+        );
       }
-      return products;
     };
 
-    const productsToShow = sortObjectsByKey(
-      filterObjectsByKey(getProductsToShow(slug), 'title', search),
-      sortBy,
-    );
+    const getProducts = async () => {
+      setIsLoadingProducts(true);
+      try {
+        const products = await fetchProducts();
+        setProducts(products);
+      } catch (error) {
+        displayAlert(true, 'danger', 'Could not load the products. Please refresh and try again.');
+      }
 
-    const productsHTML = productsToShow.length ? (
-      <div className={styles.products}>
-        {productsToShow.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-    ) : (
-      <h3 className="text-center my-1">No products to show</h3>
-    );
+      setIsLoadingProducts(false);
+    };
 
-    return (
-      <section className="container">
-        {categories.length > 0 && categoryName && <PageHeading>{categoryName}</PageHeading>}
+    getCategories();
+    getProducts();
+  }, [displayAlert]);
 
-        {!isLoadingProducts && (
-          <form
-            className={styles.filterForm}
-            onSubmit={(e) => e.preventDefault()}
-            aria-label="Filter displayed products"
-          >
-            <div className={styles.formGroup}>
-              <label htmlFor="filterCategorySelect" className={styles.formLabel}>
-                Category:
-              </label>
-              <select
-                className={clsx(styles.formControl, styles.selectFormControl)}
-                id="filterCategorySelect"
-                onChange={(e) => handleCategoryFilter(e)}
-                value={selectedCategory}
-                aria-label="Filter products by category"
-                autoComplete="off"
-              >
-                {categories.map((category) => {
-                  const { name, slug } = category;
-                  return (
-                    <option value={slug} key={slug}>
-                      {capitalize(name)}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="sortBySelect" className={styles.formLabel}>
-                Sort by:
-              </label>
-              <select
-                className={clsx(styles.formControl, styles.selectFormControl)}
-                id="sortBySelect"
-                onChange={(e) => handleSort(e)}
-                value={sortBy}
-                aria-label="Sort products by"
-                autoComplete="off"
-              >
-                <option value="price_ASC">Price (Low-High)</option>
-                <option value="price_DESC">Price (High-Low)</option>
-                <option value="title_ASC">Name (A-Z)</option>
-                <option value="title_DESC">Name (Z-A)</option>
-              </select>
-            </div>
-            {/* <div className={styles.formGroup}>
-            <label htmlFor="limitResults" className={styles.formLabel}>
-              Results per page
-            </label>
-            <select
-              className={clsx(styles.formControl, styles.selectFormControl)}
-              id="limitResults"
-              onChange={(e) => handlePaginateResults(e)}
-              value={productsPerPage}
-              aria-label="Limit number of products displayed per page"
-              autoComplete="off"
-            >
-              <option value="">All</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </div> */}
-            <div className={styles.formGroup}>
-              <label htmlFor="nameFilter" className={styles.formLabel}>
-                Search
-              </label>
-              <input
-                className={styles.formControl}
-                type="text"
-                placeholder="Start typing..."
-                name="nameFilter"
-                id="nameFilter"
-                onChange={(e) => handleSearch(e)}
-                role="search"
-                aria-label="Search products by name"
-                autoComplete="off"
-              />
-            </div>
-          </form>
-        )}
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const categories = await fetchCategories();
+        setCategories(createSlugsForCategories(['all', ...categories]));
+      } catch (error) {
+        displayAlert(
+          true,
+          'danger',
+          'Could not load the categories. Please refresh and try again.',
+        );
+      }
+    };
 
-        {isLoadingProducts ? <Loader /> : productsHTML}
-      </section>
-    );
-  },
-);
+    getCategories();
+  }, [displayAlert, setCategories]);
+
+  const handleSort = (e) => {
+    e.preventDefault();
+    setSortBy(e.target.value);
+  };
+
+  // const handleLimitChange = (e) => {
+  //   e.preventDefault();
+  //   setProductsLimit(e.target.value ? parseInt(e.target.value) : '');
+  //   // ## TODO ##
+  // };
+
+  const handleCategoryFilter = (e) => {
+    e.preventDefault();
+    history.push(`/category/${e.target.value}`);
+    setSelectedCategory(e.target.value);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+  };
+
+  const getProductsToShow = (catSlug) => {
+    if (catSlug && catSlug !== 'all') {
+      return products.filter((product) => slugify(product.category) === catSlug);
+    }
+    return products;
+  };
+
+  const productsToShow = sortObjectsByKey(
+    filterObjectsByKey(getProductsToShow(slug), 'title', search),
+    sortBy,
+  );
+
+  const productsHTML = productsToShow.length ? (
+    <div className={styles.products}>
+      {productsToShow.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  ) : (
+    <h3 className="text-center my-1">No products to show</h3>
+  );
+
+  return (
+    <section className="container">
+      {categories ? (
+        <PageHeading>{capitalize(getCategoryNameBySlug(slug, categories))}</PageHeading>
+      ) : null}
+
+      {!isLoadingProducts && categories ? (
+        <Filters
+          handleCategoryFilter={handleCategoryFilter}
+          handleSort={handleSort}
+          handleSearch={handleSearch}
+          categories={categories}
+          selectedCategory={selectedCategory}
+          sortBy={sortBy}
+          // handleLimitChange={handleLimitChange}
+        />
+      ) : null}
+
+      {isLoadingProducts ? <Loader /> : productsHTML}
+    </section>
+  );
+});
