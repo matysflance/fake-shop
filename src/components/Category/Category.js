@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import slugify from 'slugify';
 import clsx from 'clsx';
 import { ProductCard } from './ProductCard/ProductCard';
@@ -15,104 +15,132 @@ import {
 import { useAlertContext } from '../../context/AlertContextProvider';
 import { fetchProducts } from '../../api';
 
-export const Category = ({
-  isLoadingProducts,
-  products,
-  setProducts,
-  setIsLoadingProducts,
-  categories,
-}) => {
-  const { displayAlert } = useAlertContext();
-  const { slug } = useParams();
-  const [sortBy, setSortBy] = useState('title_ASC');
-  const [search, setSearch] = useState('');
-  const [productsPerPage, setProductsPerPage] = useState(10);
-  const categoryName = capitalize(getCategoryNameBySlug(slug, categories));
+export const Category = withRouter(
+  ({ isLoadingProducts, products, setProducts, setIsLoadingProducts, categories, history }) => {
+    const { displayAlert } = useAlertContext();
+    const { slug } = useParams();
+    const [sortBy, setSortBy] = useState('title_ASC');
+    const [search, setSearch] = useState('');
+    // const [productsPerPage, setProductsPerPage] = useState(10);
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const categoryName = capitalize(getCategoryNameBySlug(slug, categories));
 
-  console.log('Category render');
-  useEffect(() => {
-    const getProducts = async () => {
-      setIsLoadingProducts(true);
-      try {
-        const products = await fetchProducts();
-        setProducts(products);
-      } catch (error) {
-        displayAlert(true, 'danger', 'Could not load the products. Please refresh and try again.');
-      }
+    console.log('Category render');
+    useEffect(() => {
+      const getProducts = async () => {
+        setIsLoadingProducts(true);
+        try {
+          const products = await fetchProducts();
+          setProducts(products);
+        } catch (error) {
+          displayAlert(
+            true,
+            'danger',
+            'Could not load the products. Please refresh and try again.',
+          );
+        }
 
-      setIsLoadingProducts(false);
+        setIsLoadingProducts(false);
+      };
+
+      getProducts();
+    }, [setIsLoadingProducts, setProducts, displayAlert]);
+
+    const handleSort = (e) => {
+      e.preventDefault();
+      setSortBy(e.target.value);
     };
 
-    getProducts();
-  }, [setIsLoadingProducts, setProducts, displayAlert]);
+    // const handlePaginateResults = (e) => {
+    //   e.preventDefault();
+    //   setProductsPerPage(e.target.value ? parseInt(e.target.value) : '');
+    //   // ## TODO ##
+    // };
 
-  const handleSort = (e) => {
-    e.preventDefault();
-    setSortBy(e.target.value);
-  };
+    const handleCategoryFilter = (e) => {
+      e.preventDefault();
+      // setSelectedCategory();
+      // history.push(`/category/${selectedCategory}`);
+    };
 
-  const handlePaginateResults = (e) => {
-    e.preventDefault();
-    setProductsPerPage(e.target.value ? parseInt(e.target.value) : '');
-    // ## TODO ##
-  };
+    const handleSearch = (e) => {
+      e.preventDefault();
+      setSearch(e.target.value);
+    };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
+    const getProductsToShow = (catSlug) => {
+      if (catSlug && catSlug !== 'all') {
+        return products.filter((product) => slugify(product.category) === catSlug);
+      }
+      return products;
+    };
 
-  const getProductsToShow = (catSlug) => {
-    if (catSlug && catSlug !== 'all') {
-      return products.filter((product) => slugify(product.category) === catSlug);
-    }
-    return products;
-  };
+    const productsToShow = sortObjectsByKey(
+      filterObjectsByKey(getProductsToShow(slug), 'title', search),
+      sortBy,
+    );
 
-  const productsToShow = sortObjectsByKey(
-    filterObjectsByKey(getProductsToShow(slug), 'title', search),
-    sortBy,
-  );
+    const productsHTML = productsToShow.length ? (
+      <div className={styles.products}>
+        {productsToShow.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    ) : (
+      <h3 className="text-center my-1">No products to show</h3>
+    );
 
-  const productsHTML = productsToShow.length ? (
-    <div className={styles.products}>
-      {productsToShow.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
-  ) : (
-    <h3 className="text-center my-1">No products to show</h3>
-  );
+    return (
+      <section className="container">
+        {categories.length > 0 && categoryName && <PageHeading>{categoryName}</PageHeading>}
 
-  return (
-    <section className="container">
-      {categories.length > 0 && categoryName && <PageHeading>{categoryName}</PageHeading>}
-
-      {!isLoadingProducts && (
-        <form
-          className={styles.filterForm}
-          onSubmit={(e) => e.preventDefault()}
-          aria-label="Filter displayed products"
-        >
-          <div className={styles.formGroup}>
-            <label htmlFor="sortBySelect" className={styles.formLabel}>
-              Sort by:
-            </label>
-            <select
-              className={clsx(styles.formControl, styles.selectFormControl)}
-              id="sortBySelect"
-              onChange={(e) => handleSort(e)}
-              value={sortBy}
-              aria-label="Sort products by"
-              autoComplete="off"
-            >
-              <option value="price_ASC">Price (Low-High)</option>
-              <option value="price_DESC">Price (High-Low)</option>
-              <option value="title_ASC">Name (A-Z)</option>
-              <option value="title_DESC">Name (Z-A)</option>
-            </select>
-          </div>
-          <div className={styles.formGroup}>
+        {!isLoadingProducts && (
+          <form
+            className={styles.filterForm}
+            onSubmit={(e) => e.preventDefault()}
+            aria-label="Filter displayed products"
+          >
+            <div className={styles.formGroup}>
+              <label htmlFor="filterCategorySelect" className={styles.formLabel}>
+                Category:
+              </label>
+              <select
+                className={clsx(styles.formControl, styles.selectFormControl)}
+                id="filterCategorySelect"
+                onChange={(e) => handleCategoryFilter(e)}
+                value={selectedCategory}
+                aria-label="Filter products by category"
+                autoComplete="off"
+              >
+                {categories.map((category) => {
+                  const { name, slug } = category;
+                  return (
+                    <option value={slug} key={slug}>
+                      {capitalize(name)}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="sortBySelect" className={styles.formLabel}>
+                Sort by:
+              </label>
+              <select
+                className={clsx(styles.formControl, styles.selectFormControl)}
+                id="sortBySelect"
+                onChange={(e) => handleSort(e)}
+                value={sortBy}
+                aria-label="Sort products by"
+                autoComplete="off"
+              >
+                <option value="price_ASC">Price (Low-High)</option>
+                <option value="price_DESC">Price (High-Low)</option>
+                <option value="title_ASC">Name (A-Z)</option>
+                <option value="title_DESC">Name (Z-A)</option>
+              </select>
+            </div>
+            {/* <div className={styles.formGroup}>
             <label htmlFor="limitResults" className={styles.formLabel}>
               Results per page
             </label>
@@ -129,27 +157,28 @@ export const Category = ({
               <option value="10">10</option>
               <option value="15">15</option>
             </select>
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="nameFilter" className={styles.formLabel}>
-              Search
-            </label>
-            <input
-              className={styles.formControl}
-              type="text"
-              placeholder="Start typing..."
-              name="nameFilter"
-              id="nameFilter"
-              onChange={(e) => handleSearch(e)}
-              role="search"
-              aria-label="Search products by name"
-              autoComplete="off"
-            />
-          </div>
-        </form>
-      )}
+          </div> */}
+            <div className={styles.formGroup}>
+              <label htmlFor="nameFilter" className={styles.formLabel}>
+                Search
+              </label>
+              <input
+                className={styles.formControl}
+                type="text"
+                placeholder="Start typing..."
+                name="nameFilter"
+                id="nameFilter"
+                onChange={(e) => handleSearch(e)}
+                role="search"
+                aria-label="Search products by name"
+                autoComplete="off"
+              />
+            </div>
+          </form>
+        )}
 
-      {isLoadingProducts ? <Loader /> : productsHTML}
-    </section>
-  );
-};
+        {isLoadingProducts ? <Loader /> : productsHTML}
+      </section>
+    );
+  },
+);

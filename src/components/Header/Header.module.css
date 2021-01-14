@@ -1,9 +1,27 @@
-.header {
+/* nav */
+.navbar {
+  --navbar-color-light: #f7f7f7;
+  --navbar-color-dark: #000;
+
+  background-color: var(--navbar-color-dark);
+  color: var(--navbar-color-light);
+  align-self: stretch;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  background-color: #fff;
+  position: relative;
+  padding: 0.3rem 1.8rem;
+  height: var(--navbar-height);
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.navbarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
 }
 
 .logoLink {
@@ -12,5 +30,64 @@
 }
 
 .logoLink:focus {
-  outline: 2px dashed #000;
+  outline: 2px dashed #fff;
+}
+
+.logoHeading {
+  /* font-size: 8rem; */
+  font-weight: 700;
+  font-size: 2.1rem;
+  color: #fff;
+  margin: 0;
+}
+
+.logoHeadingHighlight {
+  color: var(--color-primary);
+}
+
+.logoSubheading {
+  /* font-size: 2.5rem; */
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #d1d1d1;
+  margin: 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .logoIcon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .logoHeading {
+    font-size: 2.5rem;
+  }
+}
+
+.basketLink {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0.5rem;
+  border: 2px dashed transparent;
+  outline: none;
+}
+
+.basketLink:focus {
+  border-color: var(--navbar-color-light);
+}
+
+.basketIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: var(--navbar-color-light);
+}
+
+.basketCount {
+  margin-right: 1rem;
 }

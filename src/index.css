@@ -1,7 +1,8 @@
 :root {
-  --color-primary: #0fa3b1;
+  --color-primary: #37d4e2;
   --font-primary: 'Montserrat', sans-serif;
   --font-secondary: 'Lato', sans-serif;
+  --navbar-height: 6.5rem;
 }
 
 /* basic reset */
@@ -54,6 +55,7 @@ body {
 
 .main-content {
   flex-grow: 1;
+  padding-top: var(--navbar-height);
 }
 
 .container {
