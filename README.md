@@ -2,11 +2,11 @@
 
 I've built this project in order to get a good grasp on React.js basic functionality. Below are some techniques/mechanisms I used:
 
-✅ Hooks - useState, useEffect + useCallback for optimization
-✅ Data fetching (https://fakestoreapi.com/) using Async/Await
-✅ ContextAPI
-✅ React Router
-✅ ErrorBoundaries
+✅ Hooks - useState, useEffect + useCallback for optimization  
+✅ Data fetching (https://fakestoreapi.com/) using Async/Await  
+✅ ContextAPI  
+✅ React Router  
+✅ ErrorBoundaries  
 ✅ CSS Modules
 
 ![Short showcase GIF on desktop](https://media.giphy.com/media/Bs4xXsmSaPJOqxIvRm/giphy.gif)
